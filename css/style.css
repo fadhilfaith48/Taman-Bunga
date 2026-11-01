@@ -1589,6 +1589,114 @@ body.page--garden {
   box-shadow: 106vw 8vh 0.4vmin 1vmin hsla(160, 66%, 25%, 0.74), 102vw 22vh 0.4vmin -1vmin hsla(128, 66%, 20%, 0.74), 98vw 36vh 0.4vmin 0vmin hsla(142, 66%, 19%, 0.74), 104vw 52vh 0.4vmin -2vmin hsla(152, 66%, 23%, 0.74), 97vw 66vh 0.4vmin -1vmin hsla(132, 66%, 21%, 0.74), 101vw 30vh 0.4vmin 0vmin hsla(160, 66%, 25%, 0.74), 107vw 44vh 0.4vmin -2vmin hsla(128, 66%, 20%, 0.74), 96vw 18vh 0.4vmin -1vmin hsla(142, 66%, 19%, 0.74);
 }
 
+.garden__trees {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(98deg, transparent 0 3%, hsla(148, 46%, 6%, 0.55) 3.6% 6.4%, transparent 7.2%), linear-gradient(84deg, transparent 0 91.5%, hsla(152, 44%, 6%, 0.5) 92.4% 95.6%, transparent 96.4%);
+  filter: blur(0.8vmin);
+  animation: tree-breathe 30s ease-in-out infinite alternate;
+}
+.garden__trees::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(168deg, transparent 0 8%, hsla(148, 44%, 7%, 0.4) 8.6% 9.8%, transparent 10.4%), linear-gradient(12deg, transparent 0 88%, hsla(150, 42%, 7%, 0.38) 88.6% 90%, transparent 90.6%);
+  filter: blur(0.6vmin);
+}
+
+.garden__vines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  height: 46%;
+  pointer-events: none;
+  overflow: visible;
+}
+.garden__vines .vine {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  transform-origin: 50% 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, hsla(146, 52%, 10%, 0.5), hsla(142, 48%, 14%, 0.32) 70%, hsla(138, 60%, 22%, 0.16));
+  filter: blur(0.35px);
+  animation: vine-sway var(--vine-dur, 16s) ease-in-out var(--vine-delay, 0s) infinite alternate;
+}
+.garden__vines .vine:nth-child(1) {
+  left: 31%;
+  height: 64%;
+  --vine-dur: 15.5s;
+  --vine-delay: -3s;
+}
+.garden__vines .vine:nth-child(2) {
+  left: 50%;
+  height: 38%;
+  --vine-dur: 18s;
+  --vine-delay: -6s;
+}
+.garden__vines .vine:nth-child(3) {
+  left: 69%;
+  height: 64%;
+  --vine-dur: 20.5s;
+  --vine-delay: -9s;
+}
+.garden__vines .vine:nth-child(4) {
+  left: 88%;
+  height: 38%;
+  --vine-dur: 23s;
+  --vine-delay: -12s;
+}
+
+.garden__moon {
+  position: absolute;
+  top: 9%;
+  left: 68%;
+  z-index: 0;
+  width: clamp(4rem, 11vmin, 9rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle at 40% 38%, hsla(158, 60%, 92%, 0.5) 0 42%, hsla(152, 50%, 78%, 0.22) 60%, transparent 74%);
+  filter: blur(0.6vmin);
+  animation: moon-glow 14s ease-in-out infinite alternate;
+}
+
+.spore {
+  position: absolute;
+  top: -4%;
+  width: 3px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, hsla(140, 90%, 88%, 0.9) 0 34%, hsla(136, 80%, 70%, 0.34) 58%, transparent 76%);
+  filter: blur(0.4px);
+  animation: spore-drift var(--spore-dur, 26s) linear var(--spore-delay, 0s) infinite;
+  will-change: transform;
+}
+.spore:nth-child(1) {
+  left: 33%;
+  --spore-dur: 26s;
+  --spore-delay: -6.5s;
+}
+.spore:nth-child(2) {
+  left: 50%;
+  --spore-dur: 30s;
+  --spore-delay: -13s;
+}
+.spore:nth-child(3) {
+  left: 67%;
+  --spore-dur: 34s;
+  --spore-delay: -19.5s;
+}
+.spore:nth-child(4) {
+  left: 84%;
+  --spore-dur: 38s;
+  --spore-delay: -26s;
+}
+
 .garden__flowers {
   position: absolute;
   inset: 0;
@@ -1815,6 +1923,51 @@ body.page--garden {
     transform: translate3d(1%, -1%, 0) scale(1.08);
   }
 }
+@keyframes tree-breathe {
+  0% {
+    transform: translate3d(0, 0, 0) scaleX(1);
+  }
+  100% {
+    transform: translate3d(0.3vw, -0.4vh, 0) scaleX(1.012);
+  }
+}
+@keyframes vine-sway {
+  0% {
+    transform: rotate(-2.2deg);
+  }
+  100% {
+    transform: rotate(2.6deg);
+  }
+}
+@keyframes moon-glow {
+  0% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.85;
+    transform: scale(1.05);
+  }
+}
+@keyframes spore-drift {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -6vh, 0) rotate(0deg);
+  }
+  12% {
+    opacity: 0.75;
+  }
+  50% {
+    transform: translate3d(3.5vmin, 46vh, 0) rotate(160deg);
+  }
+  88% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-2.5vmin, 104vh, 0) rotate(340deg);
+  }
+}
 @keyframes stars-breathe {
   0% {
     opacity: 0.48;
@@ -1930,6 +2083,9 @@ body.page--garden {
   .garden__sky::after,
   .garden__foliage--back,
   .garden__foliage--front,
+  .garden__trees,
+  .garden__vines .vine,
+  .garden__moon,
   .butterfly,
   .butterfly__wing,
   .butterfly__antenna,
@@ -1941,6 +2097,7 @@ body.page--garden {
   .snail::before,
   .snail::after,
   .firefly,
+  .spore,
   .falling-petal {
     animation: none !important;
   }

@@ -433,6 +433,148 @@ $foliage-front-b: ();
 }
 
 // ============================================================
+//  LATAR JAUH (Langkah 5)
+//  Pohon, sulur, dan bulan berada di lapis paling belakang,
+//  samar dan statis-bergerak sangat halus supaya bunga tetap
+//  menjadi subjek utama.
+// ============================================================
+
+// Siluet dua batang pohon besar di tepi panggung.
+// Dibuat dari gradient vertikal + ::before cabang.
+.garden__trees {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    // Batang kiri.
+    linear-gradient(
+      98deg,
+      transparent 0 3%,
+      hsla(148, 46%, 6%, 0.55) 3.6% 6.4%,
+      transparent 7.2%
+    ),
+    // Batang kanan.
+    linear-gradient(
+      84deg,
+      transparent 0 91.5%,
+      hsla(152, 44%, 6%, 0.5) 92.4% 95.6%,
+      transparent 96.4%
+    );
+  filter: blur(0.8vmin);
+  animation: tree-breathe 30s v.$ease-soft infinite alternate;
+
+  // Cabang menyamping yang menjulur ke atas.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        168deg,
+        transparent 0 8%,
+        hsla(148, 44%, 7%, 0.4) 8.6% 9.8%,
+        transparent 10.4%
+      ),
+      linear-gradient(
+        12deg,
+        transparent 0 88%,
+        hsla(150, 42%, 7%, 0.38) 88.6% 90%,
+        transparent 90.6%
+      );
+    filter: blur(0.6vmin);
+  }
+}
+
+// Sulur tipis menggantung dari kanopi, berayang sangat pelan.
+// @for mengatur panjang, posisi, dan jeda tiap sulur lewat nth-child.
+.garden__vines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  height: 46%;
+  pointer-events: none;
+  overflow: visible;
+
+  .vine {
+    position: absolute;
+    top: 0;
+    width: 2px;
+    transform-origin: 50% 0;
+    border-radius: 999px;
+    background: linear-gradient(
+      180deg,
+      hsla(146, 52%, 10%, 0.5),
+      hsla(142, 48%, 14%, 0.32) 70%,
+      hsla(138, 60%, 22%, 0.16)
+    );
+    filter: blur(0.35px);
+    animation: vine-sway var(--vine-dur, 16s) v.$ease-soft
+      var(--vine-delay, 0s) infinite alternate;
+  }
+
+  @for $i from 1 through 4 {
+    .vine:nth-child(#{$i}) {
+      left: #{12% + $i * 19%};
+      height: #{38% + ($i % 2) * 26%};
+      --vine-dur: #{13s + $i * 2.5s};
+      --vine-delay: #{-$i * 3s};
+    }
+  }
+}
+
+// Bulan samar di balik kanopi: cincin glow lembut yang bernapas.
+.garden__moon {
+  position: absolute;
+  top: 9%;
+  left: 68%;
+  z-index: 0;
+  width: clamp(4rem, 11vmin, 9rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 40% 38%,
+      hsla(158, 60%, 92%, 0.5) 0 42%,
+      hsla(152, 50%, 78%, 0.22) 60%,
+      transparent 74%
+    );
+  filter: blur(0.6vmin);
+  animation: moon-glow 14s v.$ease-soft infinite alternate;
+}
+
+// Spora kecil melayang turun pelan di lapis bunga.
+// Posisi & fase tiap spora diatur @for lewat nth-child.
+.spore {
+  position: absolute;
+  top: -4%;
+  width: 3px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    hsla(140, 90%, 88%, 0.9) 0 34%,
+    hsla(136, 80%, 70%, 0.34) 58%,
+    transparent 76%
+  );
+  filter: blur(0.4px);
+  animation: spore-drift var(--spore-dur, 26s) linear var(--spore-delay, 0s)
+    infinite;
+  will-change: transform;
+
+  @for $i from 1 through 4 {
+    &:nth-child(#{$i}) {
+      left: #{16% + $i * 17%};
+      --spore-dur: #{22s + $i * 4s};
+      --spore-delay: #{-$i * 6.5s};
+    }
+  }
+}
+
+// ============================================================
 //  WADAH BUNGA
 // ============================================================
 .garden__flowers {
@@ -678,6 +820,62 @@ $pollen-b: ();
   }
 }
 
+// ============================================================
+//  KEYFRAMES LATAR JAUH (Langkah 5)
+// ============================================================
+// Batang pohon bernapas nyaris tak terasa.
+@keyframes tree-breathe {
+  0% {
+    transform: translate3d(0, 0, 0) scaleX(1);
+  }
+  100% {
+    transform: translate3d(0.3vw, -0.4vh, 0) scaleX(1.012);
+  }
+}
+
+// Sulur berayang pelan dari pangkalnya.
+@keyframes vine-sway {
+  0% {
+    transform: rotate(-2.2deg);
+  }
+  100% {
+    transform: rotate(2.6deg);
+  }
+}
+
+// Cahaya bulan naik-turun halus di balik kabut.
+@keyframes moon-glow {
+  0% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.85;
+    transform: scale(1.05);
+  }
+}
+
+// Spora jatuh melengkung sambil berputar pelan.
+@keyframes spore-drift {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -6vh, 0) rotate(0deg);
+  }
+  12% {
+    opacity: 0.75;
+  }
+  50% {
+    transform: translate3d(3.5vmin, 46vh, 0) rotate(160deg);
+  }
+  88% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-2.5vmin, 104vh, 0) rotate(340deg);
+  }
+}
+
 @keyframes stars-breathe {
   0% {
     opacity: 0.48;
@@ -811,6 +1009,9 @@ $pollen-b: ();
   .garden__sky::after,
   .garden__foliage--back,
   .garden__foliage--front,
+  .garden__trees,
+  .garden__vines .vine,
+  .garden__moon,
   .butterfly,
   .butterfly__wing,
   .butterfly__antenna,
@@ -822,6 +1023,7 @@ $pollen-b: ();
   .snail::before,
   .snail::after,
   .firefly,
+  .spore,
   .falling-petal {
     animation: none !important;
   }
