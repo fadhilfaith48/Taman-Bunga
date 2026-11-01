@@ -594,3 +594,142 @@
     transform: rotate(3.5deg);
   }
 }
+
+// ============================================================
+//  KEPIK (Langkah 3)
+//  Hanya 1 elemen per kepik: kepala, garis belah sayap, dan
+//  bintik semuanya dibuat dari pseudo-element + background,
+//  sehingga total 3 elemen untuk seluruh kepik.
+//  Dua di antaranya ditempel di dalam .flower supaya ikut
+//  bergoyang bersama tangkai; satu lagi di kanopi daun.
+// ============================================================
+.ladybug {
+  --lady-hue: 6;
+  position: absolute;
+  z-index: 3;
+  width: calc(var(--bloom-w, 10rem) * 0.1);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 54% 46% 44% 56% / 62% 64% 36% 38%;
+  background:
+    // Empat bintik hitam khas kepik.
+    radial-gradient(
+      circle at 34% 44%,
+      rgba(16, 6, 8, 0.95) 0 13%,
+      transparent 27%
+    ),
+    radial-gradient(
+      circle at 68% 36%,
+      rgba(16, 6, 8, 0.95) 0 12%,
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 54% 72%,
+      rgba(16, 6, 8, 0.95) 0 11%,
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 80% 64%,
+      rgba(16, 6, 8, 0.95) 0 9%,
+      transparent 23%
+    ),
+    // Kilau punggung.
+    radial-gradient(
+      circle at 32% 26%,
+      hsla(calc(var(--lady-hue) + 34), 100%, 92%, 0.92) 0 16%,
+      transparent 44%
+    ),
+    linear-gradient(
+      154deg,
+      hsla(calc(var(--lady-hue) + 14), 96%, 62%, 1) 0%,
+      hsla(var(--lady-hue), 92%, 50%, 1) 52%,
+      hsla(calc(var(--lady-hue) - 14), 88%, 34%, 1) 100%
+    );
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 210, 200, 0.34),
+    0 0 0.7vmin hsla(var(--lady-hue), 96%, 62%, 0.5),
+    0 0 1.8vmin hsla(var(--lady-hue), 92%, 54%, 0.28);
+  transform-origin: 50% 74%;
+  animation: ladybug-crawl 11s v.$ease-soft infinite;
+
+  // Kepala gelap dengan dua mata.
+  &::before {
+    content: "";
+    position: absolute;
+    top: -18%;
+    left: 50%;
+    width: 58%;
+    aspect-ratio: 1;
+    translate: -50% 0;
+    border-radius: 50%;
+    background:
+      radial-gradient(
+        circle at 32% 58%,
+        rgba(235, 255, 245, 0.85) 0 12%,
+        transparent 28%
+      ),
+      radial-gradient(
+        circle at 68% 58%,
+        rgba(235, 255, 245, 0.85) 0 12%,
+        transparent 28%
+      ),
+      radial-gradient(
+        circle at 40% 30%,
+        rgba(255, 255, 255, 0.4) 0 20%,
+        transparent 46%
+      ),
+      #150a0b;
+    box-shadow: 0 0 0.5vmin rgba(255, 255, 255, 0.22);
+  }
+
+  // Garis belah sayap di tengah punggung.
+  &::after {
+    content: "";
+    position: absolute;
+    top: 24%;
+    left: 50%;
+    width: 7%;
+    height: 68%;
+    translate: -50% 0;
+    border-radius: 999px;
+    background: linear-gradient(
+      180deg,
+      rgba(24, 8, 10, 0.9),
+      rgba(24, 8, 10, 0.55)
+    );
+  }
+}
+
+// Posisi per kepik.
+.ladybug--stem-a {
+  top: 60%;
+  left: 53%;
+}
+
+.ladybug--stem-b {
+  top: 66%;
+  left: 52%;
+}
+
+.ladybug--canopy {
+  --bloom-w: 9rem;
+  top: 11.6%;
+  left: 18.1%;
+  rotate: 152deg;
+}
+
+// ============================================================
+//  KEYFRAMES KEPIK
+// ============================================================
+// Merayap pelan naik-turun di sepanjang garis tangkai.
+@keyframes ladybug-crawl {
+  0% {
+    transform: translate3d(-3%, 7%, 0) rotate(-7deg);
+  }
+  50% {
+    transform: translate3d(3%, -9%, 0) rotate(6deg);
+  }
+  100% {
+    transform: translate3d(-3%, 7%, 0) rotate(-7deg);
+  }
+}
