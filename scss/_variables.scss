@@ -348,3 +348,45 @@ $dragonflies: (
     z: 3,
   ),
 );
+
+// ============================================================
+//  SIPUT
+//  Satu map per siput: posisi di dasar taman, warna cangkang,
+//  kecepatan meluncur, dan lapis kedalaman.
+//  Dipakai @each di _creatures.scss.
+// ============================================================
+$snails: (
+  (
+    name: "moss",
+    x: 27vw,
+    scale: 1,
+    hue: 96,
+    sat: 62%,
+    light: 58%,
+    dur: 42s,
+    delay: -6s,
+    z: 2,
+  ),
+  (
+    name: "mist",
+    x: 66vw,
+    scale: 0.82,
+    hue: 172,
+    sat: 58%,
+    light: 56%,
+    dur: 50s,
+    delay: -21s,
+    z: 2,
+  ),
+  (
+    name: "dusk",
+    x: 87vw,
+    scale: 0.68,
+    hue: 276,
+    sat: 54%,
+    light: 56%,
+    dur: 56s,
+    delay: -34s,
+    z: 2,
+  ),
+);

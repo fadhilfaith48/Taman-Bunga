@@ -1338,6 +1338,108 @@
     transform: translate3d(-3%, 7%, 0) rotate(-7deg);
   }
 }
+.snail--moss {
+  --s-x: 27vw;
+  --s-scale: 1;
+  --s-dur: 42s;
+  --s-delay: -6s;
+  --s-z: 2;
+  --hue: 96;
+  --sat: 62%;
+  --light: 58%;
+}
+
+.snail--mist {
+  --s-x: 66vw;
+  --s-scale: 0.82;
+  --s-dur: 50s;
+  --s-delay: -21s;
+  --s-z: 2;
+  --hue: 172;
+  --sat: 58%;
+  --light: 56%;
+}
+
+.snail--dusk {
+  --s-x: 87vw;
+  --s-scale: 0.68;
+  --s-dur: 56s;
+  --s-delay: -34s;
+  --s-z: 2;
+  --hue: 276;
+  --sat: 54%;
+  --light: 56%;
+}
+
+.snail {
+  position: absolute;
+  left: var(--s-x, 50vw);
+  bottom: 3.5vh;
+  z-index: var(--s-z, 2);
+  width: clamp(1.7rem, 3.6vmin, 2.9rem);
+  height: clamp(1.1rem, 2.4vmin, 1.9rem);
+  scale: var(--s-scale, 1);
+  pointer-events: none;
+  background: radial-gradient(ellipse 30% 60% at 84% 34%, hsla(calc(var(--hue) + 22), 60%, 78%, 0.95) 0 40%, transparent 72%), linear-gradient(180deg, hsla(calc(var(--hue) + 14), 52%, 70%, 0.96) 0%, hsla(var(--hue), 48%, 46%, 0.96) 62%, hsla(calc(var(--hue) - 14), 46%, 28%, 0.96) 100%);
+  border-radius: 46% 54% 22% 26%/68% 72% 28% 32%;
+  box-shadow: inset 0 -0.25vmin 0.5vmin rgba(2, 8, 6, 0.45), 0 0.2vmin 0.9vmin rgba(1, 6, 4, 0.5), 0 0 1.3vmin hsla(var(--hue), 70%, 55%, 0.22);
+  animation: snail-glide var(--s-dur, 45s) ease-in-out var(--s-delay, 0s) infinite alternate;
+  will-change: transform;
+}
+.snail::before {
+  content: "";
+  position: absolute;
+  left: 6%;
+  bottom: 34%;
+  width: 62%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, rgba(255, 255, 255, 0.5) 0 12%, transparent 40%), repeating-radial-gradient(circle at 52% 54%, hsla(calc(var(--hue) + 10), 62%, 66%, 1) 0 8%, hsla(calc(var(--hue) - 16), 54%, 34%, 1) 8% 15%);
+  box-shadow: inset 0 0 0 1px hsla(calc(var(--hue) + 26), 70%, 84%, 0.5), inset -0.3vmin -0.3vmin 0.7vmin rgba(2, 8, 6, 0.5), 0 0 1.1vmin hsla(var(--hue), 70%, 58%, 0.3);
+  transform-origin: 52% 54%;
+  animation: snail-shell 9s ease-in-out infinite alternate;
+}
+.snail::after {
+  content: "";
+  position: absolute;
+  right: -14%;
+  top: -26%;
+  width: 8%;
+  height: 46%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, hsla(calc(var(--hue) + 20), 66%, 82%, 0.95), hsla(var(--hue), 48%, 44%, 0.95));
+  box-shadow: -0.9vmin 0.15vmin 0 -0.12vmin hsla(calc(var(--hue) + 20), 66%, 82%, 0.9), 0 -0.35vmin 0.1vmin -0.05vmin hsla(calc(var(--hue) + 40), 90%, 90%, 0.9), -0.9vmin -0.2vmin 0.1vmin -0.05vmin hsla(calc(var(--hue) + 40), 90%, 90%, 0.85);
+  transform-origin: 50% 100%;
+  animation: snail-tentacle 5.5s ease-in-out infinite alternate;
+}
+
+@keyframes snail-glide {
+  0% {
+    transform: translate3d(-1.4vw, 0, 0);
+  }
+  50% {
+    transform: translate3d(0.4vw, 0.2vh, 0);
+  }
+  100% {
+    transform: translate3d(1.6vw, 0, 0);
+  }
+}
+@keyframes snail-shell {
+  0% {
+    transform: rotate(-4deg) scale(1);
+  }
+  100% {
+    transform: rotate(5deg) scale(1.02);
+  }
+}
+@keyframes snail-tentacle {
+  0% {
+    transform: rotate(-9deg);
+  }
+  100% {
+    transform: rotate(8deg);
+  }
+}
 :root {
   color-scheme: dark;
 }
@@ -1835,6 +1937,9 @@ body.page--garden {
   .dragonfly__wing,
   .dragonfly__tail,
   .ladybug,
+  .snail,
+  .snail::before,
+  .snail::after,
   .firefly,
   .falling-petal {
     animation: none !important;

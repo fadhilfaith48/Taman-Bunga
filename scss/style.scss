@@ -818,6 +818,9 @@ $pollen-b: ();
   .dragonfly__wing,
   .dragonfly__tail,
   .ladybug,
+  .snail,
+  .snail::before,
+  .snail::after,
   .firefly,
   .falling-petal {
     animation: none !important;
