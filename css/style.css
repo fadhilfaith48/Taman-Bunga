@@ -338,7 +338,10 @@
   width: var(--bloom-w);
   aspect-ratio: 1;
   translate: -50% 0;
+  transform: rotateX(var(--bloom-tilt-x, 10deg));
   transform-origin: 50% 50%;
+  perspective: 26rem;
+  transform-style: preserve-3d;
   animation: bloom-breathe var(--breathe-duration) ease-in-out calc(var(--delay) + var(--petal-start) + 1.6s) infinite alternate;
   will-change: transform;
 }
@@ -352,7 +355,7 @@
   z-index: 1;
   width: var(--petal-w);
   height: var(--petal-h);
-  translate: -50% 0;
+  translate: -50% 0 var(--petal-z, 0px);
   rotate: var(--angle);
   transform: scale(1);
   transform-origin: 50% 100%;
@@ -391,6 +394,7 @@
   --petal-w: 13%;
   --petal-h: 39%;
   --tier-delay: 0.42s;
+  --petal-z: 0.55vmin;
   z-index: 2;
   filter: brightness(0.93) saturate(1.08);
 }
@@ -793,10 +797,10 @@
 }
 @keyframes bloom-breathe {
   0% {
-    transform: rotate(var(--bloom-tilt-a)) scale(1);
+    transform: rotate(var(--bloom-tilt-a)) rotateX(var(--bloom-tilt-x, 10deg)) scale(1);
   }
   100% {
-    transform: rotate(var(--bloom-tilt-b)) scale(1.035);
+    transform: rotate(var(--bloom-tilt-b)) rotateX(calc(var(--bloom-tilt-x, 10deg) * 0.45)) scale(1.035);
   }
 }
 @media (prefers-reduced-motion: reduce) {
