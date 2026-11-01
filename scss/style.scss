@@ -1,6 +1,7 @@
 @use "sass:list";
 @use "variables" as v;
 @use "flowers";
+@use "creatures";
 
 // ============================================================
 //  RESET + LAYOUT
@@ -810,6 +811,9 @@ $pollen-b: ();
   .garden__sky::after,
   .garden__foliage--back,
   .garden__foliage--front,
+  .butterfly,
+  .butterfly__wing,
+  .butterfly__antenna,
   .firefly,
   .falling-petal {
     animation: none !important;

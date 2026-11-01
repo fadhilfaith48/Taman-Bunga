@@ -1,0 +1,342 @@
+@use "sass:list";
+@use "sass:map";
+@use "variables" as v;
+
+// ============================================================
+//  KREATURE — KUPU-KUPU (Langkah 1)
+//  Dibangun dari 6 elemen per kupu: container, 2 grup sayap,
+//  tubuh, dan 2 antena. Tidak ada SVG/gambar sama sekali.
+//
+//  Kunci efek 3D: `.butterfly` memakai `perspective`, lalu
+//  kepakan sayap dihitung dengan `rotateY` (bukan scaleX)
+//  sehingga sayap terlihat maju-mundur terhadap kamera.
+//  Sisi kanan hanya membalik hasil akhirnya dengan scaleX(-1),
+//  jadi semua kupu berbagi satu bentuk sayap yang sama.
+// ============================================================
+
+// Geometri satu grup sayap. Kotaknya selalu berada di setengah
+// kiri; sisi kanan membalik kotak ini ke setengah kanan.
+@mixin wing-group {
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  width: 54%;
+  height: 96%;
+  translate: 0 -50%;
+  transform-origin: 100% 50%;
+  will-change: transform;
+}
+
+// Lapisan visual sayap: urat memancar dari pangkal, dua bintik
+// tepung, dan gradasi dari pangkal terang ke tepi gelap.
+@mixin wing-surface {
+  background:
+    radial-gradient(
+      ellipse 52% 44% at 30% 30%,
+      hsla(calc(var(--hue) + 48), 100%, 97%, 0.8) 0 46%,
+      transparent 76%
+    ),
+    radial-gradient(
+      circle at 62% 66%,
+      hsla(calc(var(--hue) - 34), 100%, 94%, 0.55) 0 14%,
+      transparent 34%
+    ),
+    repeating-conic-gradient(
+      from 296deg at 94% 56%,
+      hsla(var(--hue), 92%, 97%, 0.16) 0 3deg,
+      transparent 3deg 16deg
+    ),
+    radial-gradient(
+      ellipse at 92% 54%,
+      hsla(var(--hue), var(--sat), var(--light), 0.98) 0%,
+      hsla(
+        calc(var(--hue) - 18),
+        calc(var(--sat) - 8%),
+        calc(var(--light) - 26%),
+        0.94
+      ) 60%,
+      hsla(
+        calc(var(--hue) - 32),
+        calc(var(--sat) - 16%),
+        calc(var(--light) - 42%),
+        0.72
+      ) 100%
+    );
+  box-shadow:
+    inset 0 0 0 1px
+      hsla(calc(var(--hue) + 26), 100%, 96%, 0.34),
+    inset 0 -0.7vmin 1.1vmin
+      hsla(calc(var(--hue) - 24), 80%, 26%, 0.4),
+    0 0 1.4vmin hsla(var(--hue), 95%, 62%, 0.28);
+}
+
+// ============================================================
+//  POSISI + VARIASI PER KUPU
+// ============================================================
+@each $cfg in v.$butterflies {
+  .butterfly--#{map.get($cfg, name)} {
+    --b-x: #{map.get($cfg, x)};
+    --b-y: #{map.get($cfg, y)};
+    --b-scale: #{map.get($cfg, scale)};
+    --b-rot: #{map.get($cfg, rot)};
+    --b-dur: #{map.get($cfg, dur)};
+    --b-delay: #{map.get($cfg, delay)};
+    --b-z: #{map.get($cfg, z)};
+    --flap-duration: #{map.get($cfg, flap)};
+    --flap-delay: #{map.get($cfg, flap-delay)};
+    --hue: #{map.get($cfg, hue)};
+    --sat: #{map.get($cfg, sat)};
+    --light: #{map.get($cfg, light)};
+    --p1x: #{list.nth(map.get($cfg, p1), 1)};
+    --p1y: #{list.nth(map.get($cfg, p1), 2)};
+    --p2x: #{list.nth(map.get($cfg, p2), 1)};
+    --p2y: #{list.nth(map.get($cfg, p2), 2)};
+    --p3x: #{list.nth(map.get($cfg, p3), 1)};
+    --p3y: #{list.nth(map.get($cfg, p3), 2)};
+  }
+}
+
+// ============================================================
+//  TUBUH KUPU
+// ============================================================
+.butterfly {
+  position: absolute;
+  left: var(--b-x, 50vw);
+  top: var(--b-y, 30vh);
+  z-index: var(--b-z, 3);
+  width: clamp(2.8rem, 6vmin, 4.6rem);
+  height: clamp(2rem, 4.4vmin, 3.3rem);
+  scale: var(--b-scale, 1);
+  pointer-events: none;
+  perspective: 650px;
+  animation:
+    butterfly-flight var(--b-dur, 50s) v.$ease-soft var(--b-delay, 0s)
+      infinite,
+    butterfly-bob 3.4s ease-in-out var(--b-delay, 0s) infinite alternate;
+  will-change: transform;
+}
+
+.butterfly__body {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  width: 9%;
+  height: 58%;
+  translate: -50% -50%;
+  border-radius: 50% 50% 44% 56% / 32% 32% 68% 68%;
+  background: linear-gradient(
+    180deg,
+    hsla(calc(var(--hue) + 20), 70%, 82%, 0.96) 0%,
+    hsla(calc(var(--hue) - 6), 55%, 44%, 0.96) 46%,
+    hsla(calc(var(--hue) - 18), 55%, 20%, 0.98) 100%
+  );
+  box-shadow:
+    0 0 0.6vmin hsla(var(--hue), 90%, 70%, 0.5),
+    0 0 1.6vmin hsla(var(--hue), 90%, 58%, 0.3);
+
+  // Kepala + dua mata.
+  &::before {
+    content: "";
+    position: absolute;
+    top: -26%;
+    left: 50%;
+    width: 172%;
+    aspect-ratio: 1;
+    translate: -50% 0;
+    border-radius: 50%;
+    background:
+      radial-gradient(
+        circle at 32% 62%,
+        rgba(4, 10, 8, 0.9) 0 13%,
+        transparent 26%
+      ),
+      radial-gradient(
+        circle at 68% 62%,
+        rgba(4, 10, 8, 0.9) 0 13%,
+        transparent 26%
+      ),
+      radial-gradient(
+        circle at 38% 34%,
+        hsla(calc(var(--hue) + 30), 90%, 96%, 0.9) 0 22%,
+        transparent 52%
+      ),
+      hsla(calc(var(--hue) - 10), 60%, 52%, 0.98);
+    box-shadow: 0 0 1vmin hsla(var(--hue), 95%, 70%, 0.45);
+  }
+
+  // Segelenggung dada yang menyala.
+  &::after {
+    content: "";
+    position: absolute;
+    top: 14%;
+    left: 50%;
+    width: 150%;
+    height: 16%;
+    translate: -50% 0;
+    border-radius: 999px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsla(calc(var(--hue) + 36), 100%, 96%, 0.75),
+      transparent
+    );
+  }
+}
+
+// ============================================================
+//  ANTENA
+// ============================================================
+.butterfly__antenna {
+  position: absolute;
+  left: 50%;
+  top: -13%;
+  z-index: 4;
+  width: 2px;
+  height: 36%;
+  margin-left: -1px;
+  rotate: var(--ant-rot, 0deg);
+  transform-origin: 50% 100%;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    hsla(calc(var(--hue) + 18), 90%, 92%, 0.75) 0%,
+    hsla(var(--hue), 60%, 46%, 0.9) 62%,
+    hsla(calc(var(--hue) - 12), 55%, 24%, 0.95) 100%
+  );
+  animation: antenna-sway 2.6s v.$ease-soft infinite alternate;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -7%;
+    left: 50%;
+    width: 4px;
+    aspect-ratio: 1;
+    translate: -50% 0;
+    border-radius: 50%;
+    background: hsla(calc(var(--hue) + 34), 100%, 94%, 0.95);
+    box-shadow: 0 0 0.7vmin hsla(calc(var(--hue) + 24), 100%, 84%, 0.8);
+  }
+}
+
+.butterfly__antenna--left {
+  --ant-rot: -30deg;
+}
+
+.butterfly__antenna--right {
+  --ant-rot: 27deg;
+  margin-left: -1px;
+}
+
+// ============================================================
+//  SAYAP
+// ============================================================
+.butterfly__wing {
+  @include wing-group;
+  // Pose diam: sayap terbuka lebar (juga dipakai reduced motion).
+  transform: rotateY(14deg);
+  animation: wing-flap-left var(--flap-duration, 0.3s) linear
+    var(--flap-delay, 0s) infinite;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    @include wing-surface;
+    backface-visibility: hidden;
+  }
+
+  // Sayap atas: memanjang ke atas-luar, tepi membulat lebar.
+  &::before {
+    top: -3%;
+    right: -5%;
+    width: 106%;
+    height: 68%;
+    border-radius: 76% 24% 54% 46% / 66% 70% 30% 34%;
+    z-index: 1;
+  }
+
+  // Sayap bawah: lebih kecil, sedikit di belakang sayap atas.
+  &::after {
+    bottom: -7%;
+    right: -3%;
+    width: 86%;
+    height: 56%;
+    border-radius: 44% 56% 70% 30% / 44% 40% 60% 56%;
+    z-index: -1;
+    filter: brightness(0.93) saturate(1.06);
+  }
+}
+
+// Sisi kanan: bentuk & animasi yang sama, dibalik sumbu tubuh.
+.butterfly__wing--right {
+  animation-name: wing-flap-right;
+  transform: scaleX(-1) rotateY(14deg);
+}
+
+// ============================================================
+//  KEYFRAMES — DIPAKAI SEMUA KUPU
+// ============================================================
+// Jalur terbang 4 titik; titik terakhir kembali ke posisi awal
+// supaya loop mulus tanpa lompatan.
+@keyframes butterfly-flight {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(var(--b-rot));
+  }
+  25% {
+    transform: translate3d(var(--p1x), var(--p1y), 0)
+      rotate(calc(var(--b-rot) * -0.7));
+  }
+  50% {
+    transform: translate3d(var(--p2x), var(--p2y), 0)
+      rotate(calc(var(--b-rot) * 1.1));
+  }
+  75% {
+    transform: translate3d(var(--p3x), var(--p3y), 0)
+      rotate(calc(var(--b-rot) * -0.4));
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(var(--b-rot));
+  }
+}
+
+// Naik-turun halus, memakai properti `translate` terpisah dari
+// `transform` milik jalur terbang supaya keduanya tidak bentrok.
+@keyframes butterfly-bob {
+  0% {
+    translate: 0 -1.1vmin;
+  }
+  100% {
+    translate: 0 1.1vmin;
+  }
+}
+
+@keyframes wing-flap-left {
+  0%,
+  100% {
+    transform: rotateY(56deg);
+  }
+  50% {
+    transform: rotateY(-24deg);
+  }
+}
+
+@keyframes wing-flap-right {
+  0%,
+  100% {
+    transform: scaleX(-1) rotateY(56deg);
+  }
+  50% {
+    transform: scaleX(-1) rotateY(-24deg);
+  }
+}
+
+@keyframes antenna-sway {
+  0% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(5deg);
+  }
+}
