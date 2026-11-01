@@ -817,6 +817,527 @@
     opacity: 0;
   }
 }
+.butterfly--luna {
+  --b-x: 17vw;
+  --b-y: 19vh;
+  --b-scale: 0.94;
+  --b-rot: -7deg;
+  --b-dur: 54s;
+  --b-delay: -7s;
+  --b-z: 4;
+  --flap-duration: 0.36s;
+  --flap-delay: -0.12s;
+  --hue: 96;
+  --sat: 74%;
+  --light: 78%;
+  --p1x: -5vw;
+  --p1y: -6vh;
+  --p2x: 6vw;
+  --p2y: 7vh;
+  --p3x: -3vw;
+  --p3y: 4vh;
+}
+
+.butterfly--saphir {
+  --b-x: 63vw;
+  --b-y: 15vh;
+  --b-scale: 1.06;
+  --b-rot: 6deg;
+  --b-dur: 62s;
+  --b-delay: -21s;
+  --b-z: 4;
+  --flap-duration: 0.3s;
+  --flap-delay: -0.05s;
+  --hue: 204;
+  --sat: 88%;
+  --light: 74%;
+  --p1x: 7vw;
+  --p1y: 5vh;
+  --p2x: -5vw;
+  --p2y: -7vh;
+  --p3x: 4vw;
+  --p3y: 6vh;
+}
+
+.butterfly--amber {
+  --b-x: 39vw;
+  --b-y: 31vh;
+  --b-scale: 0.8;
+  --b-rot: -5deg;
+  --b-dur: 48s;
+  --b-delay: -14s;
+  --b-z: 3;
+  --flap-duration: 0.26s;
+  --flap-delay: -0.18s;
+  --hue: 44;
+  --sat: 94%;
+  --light: 72%;
+  --p1x: -6vw;
+  --p1y: 4vh;
+  --p2x: 5vw;
+  --p2y: -6vh;
+  --p3x: -4vw;
+  --p3y: -3vh;
+}
+
+.butterfly--rose {
+  --b-x: 81vw;
+  --b-y: 35vh;
+  --b-scale: 0.86;
+  --b-rot: 5deg;
+  --b-dur: 58s;
+  --b-delay: -32s;
+  --b-z: 3;
+  --flap-duration: 0.32s;
+  --flap-delay: -0.09s;
+  --hue: 332;
+  --sat: 86%;
+  --light: 76%;
+  --p1x: -4vw;
+  --p1y: -5vh;
+  --p2x: -7vw;
+  --p2y: 6vh;
+  --p3x: 3vw;
+  --p3y: -4vh;
+}
+
+.butterfly--violet {
+  --b-x: 7vw;
+  --b-y: 43vh;
+  --b-scale: 0.72;
+  --b-rot: -4deg;
+  --b-dur: 44s;
+  --b-delay: -26s;
+  --b-z: 3;
+  --flap-duration: 0.28s;
+  --flap-delay: -0.02s;
+  --hue: 276;
+  --sat: 82%;
+  --light: 76%;
+  --p1x: 5vw;
+  --p1y: 6vh;
+  --p2x: -4vw;
+  --p2y: -5vh;
+  --p3x: 6vw;
+  --p3y: -2vh;
+}
+
+.butterfly {
+  position: absolute;
+  left: var(--b-x, 50vw);
+  top: var(--b-y, 30vh);
+  z-index: var(--b-z, 3);
+  width: clamp(2.8rem, 6vmin, 4.6rem);
+  height: clamp(2rem, 4.4vmin, 3.3rem);
+  scale: var(--b-scale, 1);
+  pointer-events: none;
+  perspective: 650px;
+  animation: butterfly-flight var(--b-dur, 50s) ease-in-out var(--b-delay, 0s) infinite, butterfly-bob 3.4s ease-in-out var(--b-delay, 0s) infinite alternate;
+  will-change: transform;
+}
+
+.butterfly__body {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  width: 9%;
+  height: 58%;
+  translate: -50% -50%;
+  border-radius: 50% 50% 44% 56%/32% 32% 68% 68%;
+  background: linear-gradient(180deg, hsla(calc(var(--hue) + 20), 70%, 82%, 0.96) 0%, hsla(calc(var(--hue) - 6), 55%, 44%, 0.96) 46%, hsla(calc(var(--hue) - 18), 55%, 20%, 0.98) 100%);
+  box-shadow: 0 0 0.6vmin hsla(var(--hue), 90%, 70%, 0.5), 0 0 1.6vmin hsla(var(--hue), 90%, 58%, 0.3);
+}
+.butterfly__body::before {
+  content: "";
+  position: absolute;
+  top: -26%;
+  left: 50%;
+  width: 172%;
+  aspect-ratio: 1;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 62%, rgba(4, 10, 8, 0.9) 0 13%, transparent 26%), radial-gradient(circle at 68% 62%, rgba(4, 10, 8, 0.9) 0 13%, transparent 26%), radial-gradient(circle at 38% 34%, hsla(calc(var(--hue) + 30), 90%, 96%, 0.9) 0 22%, transparent 52%), hsla(calc(var(--hue) - 10), 60%, 52%, 0.98);
+  box-shadow: 0 0 1vmin hsla(var(--hue), 95%, 70%, 0.45);
+}
+.butterfly__body::after {
+  content: "";
+  position: absolute;
+  top: 14%;
+  left: 50%;
+  width: 150%;
+  height: 16%;
+  translate: -50% 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, hsla(calc(var(--hue) + 36), 100%, 96%, 0.75), transparent);
+}
+
+.butterfly__antenna {
+  position: absolute;
+  left: 50%;
+  top: -13%;
+  z-index: 4;
+  width: 2px;
+  height: 36%;
+  margin-left: -1px;
+  rotate: var(--ant-rot, 0deg);
+  transform-origin: 50% 100%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, hsla(calc(var(--hue) + 18), 90%, 92%, 0.75) 0%, hsla(var(--hue), 60%, 46%, 0.9) 62%, hsla(calc(var(--hue) - 12), 55%, 24%, 0.95) 100%);
+  animation: antenna-sway 2.6s ease-in-out infinite alternate;
+}
+.butterfly__antenna::after {
+  content: "";
+  position: absolute;
+  top: -7%;
+  left: 50%;
+  width: 4px;
+  aspect-ratio: 1;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: hsla(calc(var(--hue) + 34), 100%, 94%, 0.95);
+  box-shadow: 0 0 0.7vmin hsla(calc(var(--hue) + 24), 100%, 84%, 0.8);
+}
+
+.butterfly__antenna--left {
+  --ant-rot: -30deg;
+}
+
+.butterfly__antenna--right {
+  --ant-rot: 27deg;
+  margin-left: -1px;
+}
+
+.butterfly__wing {
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  width: 54%;
+  height: 96%;
+  translate: 0 -50%;
+  transform-origin: 100% 50%;
+  will-change: transform;
+  transform: rotateY(14deg);
+  animation: wing-flap-left var(--flap-duration, 0.3s) linear var(--flap-delay, 0s) infinite;
+}
+.butterfly__wing::before, .butterfly__wing::after {
+  content: "";
+  position: absolute;
+  background: radial-gradient(ellipse 52% 44% at 30% 30%, hsla(calc(var(--hue) + 48), 100%, 97%, 0.8) 0 46%, transparent 76%), radial-gradient(circle at 62% 66%, hsla(calc(var(--hue) - 34), 100%, 94%, 0.55) 0 14%, transparent 34%), repeating-conic-gradient(from 296deg at 94% 56%, hsla(var(--hue), 92%, 97%, 0.16) 0 3deg, transparent 3deg 16deg), radial-gradient(ellipse at 92% 54%, hsla(var(--hue), var(--sat), var(--light), 0.98) 0%, hsla(calc(var(--hue) - 18), calc(var(--sat) - 8%), calc(var(--light) - 26%), 0.94) 60%, hsla(calc(var(--hue) - 32), calc(var(--sat) - 16%), calc(var(--light) - 42%), 0.72) 100%);
+  box-shadow: inset 0 0 0 1px hsla(calc(var(--hue) + 26), 100%, 96%, 0.34), inset 0 -0.7vmin 1.1vmin hsla(calc(var(--hue) - 24), 80%, 26%, 0.4), 0 0 1.4vmin hsla(var(--hue), 95%, 62%, 0.28);
+  backface-visibility: hidden;
+}
+.butterfly__wing::before {
+  top: -3%;
+  right: -5%;
+  width: 106%;
+  height: 68%;
+  border-radius: 76% 24% 54% 46%/66% 70% 30% 34%;
+  z-index: 1;
+}
+.butterfly__wing::after {
+  bottom: -7%;
+  right: -3%;
+  width: 86%;
+  height: 56%;
+  border-radius: 44% 56% 70% 30%/44% 40% 60% 56%;
+  z-index: -1;
+  filter: brightness(0.93) saturate(1.06);
+}
+
+.butterfly__wing--right {
+  animation-name: wing-flap-right;
+  transform: scaleX(-1) rotateY(14deg);
+}
+
+@keyframes butterfly-flight {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(var(--b-rot));
+  }
+  25% {
+    transform: translate3d(var(--p1x), var(--p1y), 0) rotate(calc(var(--b-rot) * -0.7));
+  }
+  50% {
+    transform: translate3d(var(--p2x), var(--p2y), 0) rotate(calc(var(--b-rot) * 1.1));
+  }
+  75% {
+    transform: translate3d(var(--p3x), var(--p3y), 0) rotate(calc(var(--b-rot) * -0.4));
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(var(--b-rot));
+  }
+}
+@keyframes butterfly-bob {
+  0% {
+    translate: 0 -1.1vmin;
+  }
+  100% {
+    translate: 0 1.1vmin;
+  }
+}
+@keyframes wing-flap-left {
+  0%, 100% {
+    transform: rotateY(56deg);
+  }
+  50% {
+    transform: rotateY(-24deg);
+  }
+}
+@keyframes wing-flap-right {
+  0%, 100% {
+    transform: scaleX(-1) rotateY(56deg);
+  }
+  50% {
+    transform: scaleX(-1) rotateY(-24deg);
+  }
+}
+@keyframes antenna-sway {
+  0% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(5deg);
+  }
+}
+.dragonfly--zephyr {
+  --d-x: 34vw;
+  --d-y: 46vh;
+  --d-scale: 0.9;
+  --d-dur: 22s;
+  --d-delay: -6s;
+  --d-z: 3;
+  --flap-duration: 0.12s;
+  --flap-delay: -0.04s;
+  --hue: 176;
+  --sat: 78%;
+  --light: 72%;
+}
+
+.dragonfly--aurel {
+  --d-x: 71vw;
+  --d-y: 38vh;
+  --d-scale: 1;
+  --d-dur: 27s;
+  --d-delay: -13s;
+  --d-z: 3;
+  --flap-duration: 0.1s;
+  --flap-delay: -0.07s;
+  --hue: 52;
+  --sat: 92%;
+  --light: 74%;
+}
+
+.dragonfly {
+  position: absolute;
+  left: var(--d-x, 50vw);
+  top: var(--d-y, 46vh);
+  z-index: var(--d-z, 3);
+  width: clamp(3.6rem, 8vmin, 6.4rem);
+  height: clamp(1.7rem, 3.9vmin, 3rem);
+  scale: var(--d-scale, 1);
+  pointer-events: none;
+  perspective: 520px;
+  animation: dragonfly-hover var(--d-dur, 22s) ease-in-out var(--d-delay, 0s) infinite alternate;
+  will-change: transform;
+}
+
+.dragonfly__body {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  width: 17%;
+  height: 36%;
+  translate: -50% -50%;
+  border-radius: 46% 54% 52% 48%/58% 56% 44% 42%;
+  background: radial-gradient(circle at 34% 30%, hsla(calc(var(--hue) + 34), 100%, 96%, 0.95) 0 24%, transparent 58%), linear-gradient(150deg, hsla(var(--hue), calc(var(--sat) - 10%), calc(var(--light) + 8%), 0.98), hsla(calc(var(--hue) - 16), calc(var(--sat) - 18%), 34%, 0.96));
+  box-shadow: 0 0 0.7vmin hsla(var(--hue), 95%, 74%, 0.55), 0 0 2vmin hsla(var(--hue), 95%, 62%, 0.32);
+}
+.dragonfly__body::before {
+  content: "";
+  position: absolute;
+  left: -62%;
+  top: 50%;
+  width: 68%;
+  aspect-ratio: 1;
+  translate: 0 -50%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 42%, hsla(calc(var(--hue) + 46), 90%, 92%, 0.95) 0 26%, rgba(3, 12, 10, 0.85) 46%, transparent 62%), radial-gradient(circle at 70% 44%, hsla(calc(var(--hue) + 46), 90%, 92%, 0.95) 0 24%, rgba(3, 12, 10, 0.85) 44%, transparent 60%), hsla(var(--hue), calc(var(--sat) - 24%), 40%, 0.98);
+  box-shadow: 0 0 1vmin hsla(var(--hue), 100%, 78%, 0.5);
+}
+.dragonfly__body::after {
+  content: "";
+  position: absolute;
+  left: 8%;
+  top: 18%;
+  width: 84%;
+  height: 30%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, hsla(calc(var(--hue) + 40), 100%, 97%, 0.8), transparent);
+}
+
+.dragonfly__tail {
+  position: absolute;
+  left: 56%;
+  top: 50%;
+  width: 44%;
+  height: 9%;
+  translate: 0 -50%;
+  transform-origin: 0 50%;
+  border-radius: 999px;
+  background: repeating-linear-gradient(90deg, hsla(var(--hue), calc(var(--sat) - 16%), calc(var(--light) + 4%), 0.95) 0 7%, hsla(calc(var(--hue) - 16), calc(var(--sat) - 24%), 30%, 0.95) 7% 10%);
+  box-shadow: 0 0 0.5vmin hsla(var(--hue), 95%, 74%, 0.4), 0 0 1.4vmin hsla(var(--hue), 95%, 64%, 0.24);
+  animation: dragonfly-tail 4.4s ease-in-out infinite alternate;
+}
+
+.dragonfly__wing {
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  width: 56%;
+  height: 92%;
+  translate: 0 -50%;
+  transform-origin: 100% 50%;
+  transform: rotateY(8deg);
+  animation: dragonfly-flap-left var(--flap-duration, 0.12s) linear var(--flap-delay, 0s) infinite;
+  will-change: transform;
+}
+.dragonfly__wing::before, .dragonfly__wing::after {
+  content: "";
+  position: absolute;
+  opacity: 0.84;
+  background: linear-gradient(135deg, hsla(calc(var(--hue) + 40), 100%, 96%, 0.55), hsla(var(--hue), 95%, 82%, 0.32) 52%, hsla(calc(var(--hue) - 26), 92%, 68%, 0.18)), repeating-linear-gradient(72deg, transparent 0 5px, rgba(255, 255, 255, 0.17) 5px 6px), repeating-linear-gradient(108deg, transparent 0 7px, rgba(255, 255, 255, 0.11) 7px 8px);
+  box-shadow: inset 0 0 0 1px hsla(calc(var(--hue) + 30), 100%, 97%, 0.52), 0 0 1.1vmin hsla(var(--hue), 95%, 74%, 0.3);
+  backface-visibility: hidden;
+}
+.dragonfly__wing::before {
+  top: -44%;
+  right: -3%;
+  width: 102%;
+  height: 70%;
+  rotate: -8deg;
+  border-radius: 78% 22% 64% 36%/76% 70% 30% 24%;
+  z-index: 1;
+}
+.dragonfly__wing::after {
+  bottom: -42%;
+  right: -2%;
+  width: 92%;
+  height: 66%;
+  rotate: 7deg;
+  border-radius: 64% 36% 78% 22%/24% 22% 76% 78%;
+  z-index: -1;
+  filter: brightness(0.95);
+}
+
+.dragonfly__wing--right {
+  animation-name: dragonfly-flap-right;
+  transform: scaleX(-1) rotateY(8deg);
+}
+
+@keyframes dragonfly-hover {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-3deg);
+  }
+  33% {
+    transform: translate3d(1.4vw, -1.6vh, 0) rotate(4deg);
+  }
+  66% {
+    transform: translate3d(-1.2vw, 1.4vh, 0) rotate(-5deg);
+  }
+  100% {
+    transform: translate3d(0.6vw, 0.8vh, 0) rotate(2deg);
+  }
+}
+@keyframes dragonfly-flap-left {
+  0%, 100% {
+    transform: rotateY(40deg);
+  }
+  50% {
+    transform: rotateY(-16deg);
+  }
+}
+@keyframes dragonfly-flap-right {
+  0%, 100% {
+    transform: scaleX(-1) rotateY(40deg);
+  }
+  50% {
+    transform: scaleX(-1) rotateY(-16deg);
+  }
+}
+@keyframes dragonfly-tail {
+  0% {
+    transform: rotate(-2.5deg);
+  }
+  100% {
+    transform: rotate(3.5deg);
+  }
+}
+.ladybug {
+  --lady-hue: 6;
+  position: absolute;
+  z-index: 3;
+  width: calc(var(--bloom-w, 10rem) * 0.1);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 54% 46% 44% 56%/62% 64% 36% 38%;
+  background: radial-gradient(circle at 34% 44%, rgba(16, 6, 8, 0.95) 0 13%, transparent 27%), radial-gradient(circle at 68% 36%, rgba(16, 6, 8, 0.95) 0 12%, transparent 26%), radial-gradient(circle at 54% 72%, rgba(16, 6, 8, 0.95) 0 11%, transparent 25%), radial-gradient(circle at 80% 64%, rgba(16, 6, 8, 0.95) 0 9%, transparent 23%), radial-gradient(circle at 32% 26%, hsla(calc(var(--lady-hue) + 34), 100%, 92%, 0.92) 0 16%, transparent 44%), linear-gradient(154deg, hsla(calc(var(--lady-hue) + 14), 96%, 62%, 1) 0%, hsla(var(--lady-hue), 92%, 50%, 1) 52%, hsla(calc(var(--lady-hue) - 14), 88%, 34%, 1) 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 210, 200, 0.34), 0 0 0.7vmin hsla(var(--lady-hue), 96%, 62%, 0.5), 0 0 1.8vmin hsla(var(--lady-hue), 92%, 54%, 0.28);
+  transform-origin: 50% 74%;
+  animation: ladybug-crawl 11s ease-in-out infinite;
+}
+.ladybug::before {
+  content: "";
+  position: absolute;
+  top: -18%;
+  left: 50%;
+  width: 58%;
+  aspect-ratio: 1;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 58%, rgba(235, 255, 245, 0.85) 0 12%, transparent 28%), radial-gradient(circle at 68% 58%, rgba(235, 255, 245, 0.85) 0 12%, transparent 28%), radial-gradient(circle at 40% 30%, rgba(255, 255, 255, 0.4) 0 20%, transparent 46%), #150a0b;
+  box-shadow: 0 0 0.5vmin rgba(255, 255, 255, 0.22);
+}
+.ladybug::after {
+  content: "";
+  position: absolute;
+  top: 24%;
+  left: 50%;
+  width: 7%;
+  height: 68%;
+  translate: -50% 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(24, 8, 10, 0.9), rgba(24, 8, 10, 0.55));
+}
+
+.ladybug--stem-a {
+  top: 60%;
+  left: 53%;
+}
+
+.ladybug--stem-b {
+  top: 66%;
+  left: 52%;
+}
+
+.ladybug--canopy {
+  --bloom-w: 9rem;
+  top: 11.6%;
+  left: 18.1%;
+  rotate: 152deg;
+}
+
+@keyframes ladybug-crawl {
+  0% {
+    transform: translate3d(-3%, 7%, 0) rotate(-7deg);
+  }
+  50% {
+    transform: translate3d(3%, -9%, 0) rotate(6deg);
+  }
+  100% {
+    transform: translate3d(-3%, 7%, 0) rotate(-7deg);
+  }
+}
 :root {
   color-scheme: dark;
 }
@@ -1307,6 +1828,13 @@ body.page--garden {
   .garden__sky::after,
   .garden__foliage--back,
   .garden__foliage--front,
+  .butterfly,
+  .butterfly__wing,
+  .butterfly__antenna,
+  .dragonfly,
+  .dragonfly__wing,
+  .dragonfly__tail,
+  .ladybug,
   .firefly,
   .falling-petal {
     animation: none !important;
