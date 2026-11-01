@@ -340,3 +340,257 @@
     transform: rotate(5deg);
   }
 }
+
+// ============================================================
+//  CAPUNG (Langkah 2)
+//  5 elemen per capung: container, 2 grup sayap (masing-masing
+//  menghasilkan 2 sayap lewat pseudo-element), badan, dan ekor.
+//  Geometri sayap memakai trik sama dengan kupu: kotak sisi
+//  kiri, lalu sisi kanan dibalik dengan scaleX(-1).
+// ============================================================
+@each $cfg in v.$dragonflies {
+  .dragonfly--#{map.get($cfg, name)} {
+    --d-x: #{map.get($cfg, x)};
+    --d-y: #{map.get($cfg, y)};
+    --d-scale: #{map.get($cfg, scale)};
+    --d-dur: #{map.get($cfg, dur)};
+    --d-delay: #{map.get($cfg, delay)};
+    --d-z: #{map.get($cfg, z)};
+    --flap-duration: #{map.get($cfg, flap)};
+    --flap-delay: #{map.get($cfg, flap-delay)};
+    --hue: #{map.get($cfg, hue)};
+    --sat: #{map.get($cfg, sat)};
+    --light: #{map.get($cfg, light)};
+  }
+}
+
+.dragonfly {
+  position: absolute;
+  left: var(--d-x, 50vw);
+  top: var(--d-y, 46vh);
+  z-index: var(--d-z, 3);
+  width: clamp(3.6rem, 8vmin, 6.4rem);
+  height: clamp(1.7rem, 3.9vmin, 3rem);
+  scale: var(--d-scale, 1);
+  pointer-events: none;
+  perspective: 520px;
+  animation: dragonfly-hover var(--d-dur, 22s) v.$ease-soft
+    var(--d-delay, 0s) infinite alternate;
+  will-change: transform;
+}
+
+// Badan: dada di tengah, kepala bermata besar di kiri.
+.dragonfly__body {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  width: 17%;
+  height: 36%;
+  translate: -50% -50%;
+  border-radius: 46% 54% 52% 48% / 58% 56% 44% 42%;
+  background:
+    radial-gradient(
+      circle at 34% 30%,
+      hsla(calc(var(--hue) + 34), 100%, 96%, 0.95) 0 24%,
+      transparent 58%
+    ),
+    linear-gradient(
+      150deg,
+      hsla(var(--hue), calc(var(--sat) - 10%), calc(var(--light) + 8%), 0.98),
+      hsla(calc(var(--hue) - 16), calc(var(--sat) - 18%), 34%, 0.96)
+    );
+  box-shadow:
+    0 0 0.7vmin hsla(var(--hue), 95%, 74%, 0.55),
+    0 0 2vmin hsla(var(--hue), 95%, 62%, 0.32);
+
+  // Kepala + dua mata lebar.
+  &::before {
+    content: "";
+    position: absolute;
+    left: -62%;
+    top: 50%;
+    width: 68%;
+    aspect-ratio: 1;
+    translate: 0 -50%;
+    border-radius: 50%;
+    background:
+      radial-gradient(
+        circle at 34% 42%,
+        hsla(calc(var(--hue) + 46), 90%, 92%, 0.95) 0 26%,
+        rgba(3, 12, 10, 0.85) 46%,
+        transparent 62%
+      ),
+      radial-gradient(
+        circle at 70% 44%,
+        hsla(calc(var(--hue) + 46), 90%, 92%, 0.95) 0 24%,
+        rgba(3, 12, 10, 0.85) 44%,
+        transparent 60%
+      ),
+      hsla(var(--hue), calc(var(--sat) - 24%), 40%, 0.98);
+    box-shadow: 0 0 1vmin hsla(var(--hue), 100%, 78%, 0.5);
+  }
+
+  // Kilau dada.
+  &::after {
+    content: "";
+    position: absolute;
+    left: 8%;
+    top: 18%;
+    width: 84%;
+    height: 30%;
+    border-radius: 999px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsla(calc(var(--hue) + 40), 100%, 97%, 0.8),
+      transparent
+    );
+  }
+}
+
+// Ekor tersegmen, digoyang pelan dari pangkalnya.
+.dragonfly__tail {
+  position: absolute;
+  left: 56%;
+  top: 50%;
+  width: 44%;
+  height: 9%;
+  translate: 0 -50%;
+  transform-origin: 0 50%;
+  border-radius: 999px;
+  background: repeating-linear-gradient(
+    90deg,
+    hsla(var(--hue), calc(var(--sat) - 16%), calc(var(--light) + 4%), 0.95) 0 7%,
+    hsla(calc(var(--hue) - 16), calc(var(--sat) - 24%), 30%, 0.95) 7% 10%
+  );
+  box-shadow:
+    0 0 0.5vmin hsla(var(--hue), 95%, 74%, 0.4),
+    0 0 1.4vmin hsla(var(--hue), 95%, 64%, 0.24);
+  animation: dragonfly-tail 4.4s v.$ease-soft infinite alternate;
+}
+
+// ============================================================
+//  SAYAP CAPUNG
+// ============================================================
+@mixin dragonfly-wing-surface {
+  opacity: 0.84;
+  background:
+    linear-gradient(
+      135deg,
+      hsla(calc(var(--hue) + 40), 100%, 96%, 0.55),
+      hsla(var(--hue), 95%, 82%, 0.32) 52%,
+      hsla(calc(var(--hue) - 26), 92%, 68%, 0.18)
+    ),
+    repeating-linear-gradient(
+      72deg,
+      transparent 0 5px,
+      rgba(255, 255, 255, 0.17) 5px 6px
+    ),
+    repeating-linear-gradient(
+      108deg,
+      transparent 0 7px,
+      rgba(255, 255, 255, 0.11) 7px 8px
+    );
+  box-shadow:
+    inset 0 0 0 1px hsla(calc(var(--hue) + 30), 100%, 97%, 0.52),
+    0 0 1.1vmin hsla(var(--hue), 95%, 74%, 0.3);
+}
+
+.dragonfly__wing {
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  width: 56%;
+  height: 92%;
+  translate: 0 -50%;
+  transform-origin: 100% 50%;
+  transform: rotateY(8deg);
+  animation: dragonfly-flap-left var(--flap-duration, 0.12s) linear
+    var(--flap-delay, 0s) infinite;
+  will-change: transform;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    @include dragonfly-wing-surface;
+    backface-visibility: hidden;
+  }
+
+  // Sayap depan: memanjang ke atas-luar.
+  &::before {
+    top: -44%;
+    right: -3%;
+    width: 102%;
+    height: 70%;
+    rotate: -8deg;
+    border-radius: 78% 22% 64% 36% / 76% 70% 30% 24%;
+    z-index: 1;
+  }
+
+  // Sayap belakang: sedikit lebih pendek, di bawah sayap depan.
+  &::after {
+    bottom: -42%;
+    right: -2%;
+    width: 92%;
+    height: 66%;
+    rotate: 7deg;
+    border-radius: 64% 36% 78% 22% / 24% 22% 76% 78%;
+    z-index: -1;
+    filter: brightness(0.95);
+  }
+}
+
+.dragonfly__wing--right {
+  animation-name: dragonfly-flap-right;
+  transform: scaleX(-1) rotateY(8deg);
+}
+
+// ============================================================
+//  KEYFRAMES CAPUNG
+// ============================================================
+// Jalur hover kecil di tempat: terlihat melayang, bukan terbang.
+@keyframes dragonfly-hover {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-3deg);
+  }
+  33% {
+    transform: translate3d(1.4vw, -1.6vh, 0) rotate(4deg);
+  }
+  66% {
+    transform: translate3d(-1.2vw, 1.4vh, 0) rotate(-5deg);
+  }
+  100% {
+    transform: translate3d(0.6vw, 0.8vh, 0) rotate(2deg);
+  }
+}
+
+@keyframes dragonfly-flap-left {
+  0%,
+  100% {
+    transform: rotateY(40deg);
+  }
+  50% {
+    transform: rotateY(-16deg);
+  }
+}
+
+@keyframes dragonfly-flap-right {
+  0%,
+  100% {
+    transform: scaleX(-1) rotateY(40deg);
+  }
+  50% {
+    transform: scaleX(-1) rotateY(-16deg);
+  }
+}
+
+@keyframes dragonfly-tail {
+  0% {
+    transform: rotate(-2.5deg);
+  }
+  100% {
+    transform: rotate(3.5deg);
+  }
+}

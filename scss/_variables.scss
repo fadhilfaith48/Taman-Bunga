@@ -312,3 +312,39 @@ $butterflies: (
     p3: (6vw, -2vh),
   ),
 );
+
+// ============================================================
+//  CAPUNG
+//  Satu map per capung: posisi hover, warna, dan timing.
+//  Dipakai @each di _creatures.scss.
+// ============================================================
+$dragonflies: (
+  (
+    name: "zephyr",
+    x: 34vw,
+    y: 46vh,
+    scale: 0.9,
+    hue: 176,
+    sat: 78%,
+    light: 72%,
+    dur: 22s,
+    delay: -6s,
+    flap: 0.12s,
+    flap-delay: -0.04s,
+    z: 3,
+  ),
+  (
+    name: "aurel",
+    x: 71vw,
+    y: 38vh,
+    scale: 1,
+    hue: 52,
+    sat: 92%,
+    light: 74%,
+    dur: 27s,
+    delay: -13s,
+    flap: 0.1s,
+    flap-delay: -0.07s,
+    z: 3,
+  ),
+);
