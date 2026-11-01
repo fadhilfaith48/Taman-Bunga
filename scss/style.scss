@@ -1,0 +1,821 @@
+@use "sass:list";
+@use "variables" as v;
+@use "flowers";
+
+// ============================================================
+//  RESET + LAYOUT
+// ============================================================
+:root {
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: #010604;
+}
+
+body.page--garden {
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow-x: hidden;
+  overflow-x: clip;
+  background: #010604;
+}
+
+// Heading tetap ada untuk struktur dokumen, tanpa mengganggu visual.
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// ============================================================
+//  PANGGUNG
+// ============================================================
+.garden {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  overflow: clip;
+  background:
+    // Cincin cahaya hijau di dekat tanah.
+    radial-gradient(
+      ellipse 82% 54% at 50% 106%,
+      hsla(148, 78%, 34%, 0.34),
+      transparent 72%
+    ),
+    // Bokeh kanopi.
+    radial-gradient(
+      ellipse 46% 40% at 18% 30%,
+      hsla(150, 74%, 42%, 0.16),
+      transparent 74%
+    ),
+    radial-gradient(
+      ellipse 50% 44% at 84% 22%,
+      hsla(105, 58%, 40%, 0.12),
+      transparent 76%
+    ),
+    radial-gradient(
+      ellipse 42% 34% at 52% 8%,
+      hsla(160, 80%, 46%, 0.1),
+      transparent 74%
+    ),
+    // Kolam cahaya lembut di tengah panggung.
+    radial-gradient(
+      ellipse 60% 46% at 50% 52%,
+      hsla(150, 64%, 30%, 0.14),
+      transparent 76%
+    ),
+    linear-gradient(180deg, #010704 0%, #052014 48%, #0a3320 100%);
+
+  // Vignette hijau gelap.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 7;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse at 50% 43%,
+      transparent 32%,
+      rgba(1, 10, 5, 0.4) 74%,
+      rgba(0, 7, 3, 0.78) 100%
+    );
+  }
+
+  // Kabut tanah hijau — tanpa rumput, hanya cahaya lembap.
+  &::after {
+    content: "";
+    position: absolute;
+    left: -10%;
+    bottom: -18%;
+    z-index: 5;
+    width: 120%;
+    height: 48%;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        ellipse 52% 36% at 50% 42%,
+        hsla(148, 88%, 64%, 0.22),
+        transparent 72%
+      ),
+      linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(4, 28, 15, 0.6) 58%,
+        rgba(1, 12, 7, 0.94) 100%
+      );
+    filter: blur(1.5vmin);
+  }
+}
+
+// ============================================================
+//  LANGIT + BOKEH
+// ============================================================
+.garden__sky {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -12%;
+    background:
+      // Aurora hijau senja.
+      radial-gradient(
+        ellipse 34% 28% at 26% 22%,
+        hsla(150, 92%, 58%, 0.16),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 38% 30% at 72% 14%,
+        hsla(96, 70%, 52%, 0.1),
+        transparent 74%
+      ),
+      radial-gradient(
+        ellipse 54% 34% at 50% 76%,
+        hsla(148, 92%, 56%, 0.14),
+        transparent 76%
+      ),
+      // Sinar remang menembus kanopi.
+      repeating-linear-gradient(
+        105deg,
+        transparent 0 12vmin,
+        hsla(148, 100%, 82%, 0.02) 12vmin 14vmin,
+        transparent 14vmin 26vmin
+      );
+    filter: blur(2.7vmin);
+    animation: sky-drift 24s v.$ease-soft infinite alternate;
+    will-change: transform;
+  }
+
+  // Bintang kecil + bokeh lembut, semuanya gradient CSS.
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(
+        circle at 12% 18%,
+        rgba(218, 255, 252, 0.72) 0 1px,
+        transparent 1.8px
+      ),
+      radial-gradient(
+        circle at 24% 32%,
+        rgba(210, 255, 250, 0.5) 0 1px,
+        transparent 1.7px
+      ),
+      radial-gradient(
+        circle at 38% 12%,
+        rgba(255, 229, 250, 0.58) 0 1px,
+        transparent 1.8px
+      ),
+      radial-gradient(
+        circle at 53% 26%,
+        rgba(216, 255, 252, 0.62) 0 1px,
+        transparent 1.8px
+      ),
+      radial-gradient(
+        circle at 66% 9%,
+        rgba(207, 245, 255, 0.68) 0 1px,
+        transparent 1.8px
+      ),
+      radial-gradient(
+        circle at 78% 31%,
+        rgba(255, 224, 246, 0.52) 0 1px,
+        transparent 1.8px
+      ),
+      radial-gradient(
+        circle at 90% 15%,
+        rgba(218, 255, 252, 0.65) 0 1px,
+        transparent 1.8px
+      ),
+      radial-gradient(
+        circle at 87% 42%,
+        rgba(206, 252, 255, 0.4) 0 1px,
+        transparent 1.7px
+      ),
+      radial-gradient(
+        circle at 8% 47%,
+        rgba(242, 226, 255, 0.36) 0 1px,
+        transparent 1.7px
+      ),
+      radial-gradient(
+        circle at 46% 41%,
+        hsla(150, 100%, 74%, 0.1) 0 2.8vmin,
+        transparent 3vmin
+      ),
+      radial-gradient(
+        circle at 72% 22%,
+        hsla(96, 100%, 74%, 0.07) 0 3.4vmin,
+        transparent 3.6vmin
+      ),
+      radial-gradient(
+        circle at 20% 12%,
+        hsla(146, 100%, 72%, 0.08) 0 4.2vmin,
+        transparent 4.4vmin
+      );
+    background-repeat: no-repeat;
+    opacity: 0.8;
+    animation: stars-breathe 9s v.$ease-soft infinite alternate;
+    will-change: opacity;
+  }
+}
+
+// ============================================================
+//  DEDAUNAN
+//  Satu pseudo-element membawa banyak bayangan daun hasil
+//  generate @for, sehingga detail kaya namun DOM tetap ringan.
+// ============================================================
+@function foliage-shadow($x, $y, $spread, $blur, $color) {
+  @return #{$x} #{$y} #{$blur} #{$spread} #{$color};
+}
+
+$foliage-back-a: ();
+
+@for $i from 1 through list.length(v.$foliage-back-a-x) {
+  $idx: ($i - 1) % list.length(v.$foliage-hues) + 1;
+  $color: hsla(
+    list.nth(v.$foliage-hues, $idx),
+    58%,
+    list.nth(v.$foliage-lights, $idx) * 1% + 6%,
+    0.46
+  );
+  $foliage-back-a: list.append(
+    $foliage-back-a,
+    foliage-shadow(
+      list.nth(v.$foliage-back-a-x, $i),
+      list.nth(v.$foliage-back-a-y, $i),
+      list.nth(v.$foliage-back-a-spread, $i),
+      1.4vmin,
+      $color
+    ),
+    comma
+  );
+}
+
+$foliage-back-b: ();
+
+@for $i from 1 through list.length(v.$foliage-back-b-x) {
+  $idx: ($i + 1) % list.length(v.$foliage-hues) + 1;
+  $color: hsla(
+    list.nth(v.$foliage-hues, $idx),
+    56%,
+    list.nth(v.$foliage-lights, $idx) * 1% + 5%,
+    0.5
+  );
+  $foliage-back-b: list.append(
+    $foliage-back-b,
+    foliage-shadow(
+      list.nth(v.$foliage-back-b-x, $i),
+      list.nth(v.$foliage-back-b-y, $i),
+      list.nth(v.$foliage-back-b-spread, $i),
+      1.2vmin,
+      $color
+    ),
+    comma
+  );
+}
+
+$foliage-front-a: ();
+
+@for $i from 1 through list.length(v.$foliage-front-a-x) {
+  $idx: ($i + 3) % list.length(v.$foliage-hues) + 1;
+  $color: hsla(
+    list.nth(v.$foliage-hues, $idx),
+    64%,
+    list.nth(v.$foliage-lights, $idx) * 1% + 8%,
+    0.78
+  );
+  $foliage-front-a: list.append(
+    $foliage-front-a,
+    foliage-shadow(
+      list.nth(v.$foliage-front-a-x, $i),
+      list.nth(v.$foliage-front-a-y, $i),
+      list.nth(v.$foliage-front-a-spread, $i),
+      0.45vmin,
+      $color
+    ),
+    comma
+  );
+}
+
+$foliage-front-b: ();
+
+@for $i from 1 through list.length(v.$foliage-front-b-x) {
+  $idx: ($i + 2) % list.length(v.$foliage-hues) + 1;
+  $color: hsla(
+    list.nth(v.$foliage-hues, $idx),
+    66%,
+    list.nth(v.$foliage-lights, $idx) * 1% + 9%,
+    0.74
+  );
+  $foliage-front-b: list.append(
+    $foliage-front-b,
+    foliage-shadow(
+      list.nth(v.$foliage-front-b-x, $i),
+      list.nth(v.$foliage-front-b-y, $i),
+      list.nth(v.$foliage-front-b-spread, $i),
+      0.4vmin,
+      $color
+    ),
+    comma
+  );
+}
+
+.garden__foliage {
+  position: absolute;
+  inset: -8%;
+  pointer-events: none;
+
+  // Salinan daun dibuat dari box-shadow, bukan elemen baru.
+  // Offset 6.896% menetralkan `inset: -8%` agar koordinat
+  // box-shadow tetap dihitung relatif terhadap panggung.
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 6.896%;
+    left: 6.896%;
+    width: 11vmin;
+    height: 4.2vmin;
+    border-radius: 100% 0 100% 0;
+    background: transparent;
+  }
+}
+
+.garden__foliage--back {
+  z-index: 1;
+  opacity: 0.78;
+  background:
+    radial-gradient(
+      ellipse 46% 16% at 50% -3%,
+      hsla(145, 70%, 8%, 0.9),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 28% 24% at 5% 4%,
+      hsla(152, 68%, 9%, 0.8),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 26% 22% at 95% 8%,
+      hsla(136, 62%, 9%, 0.8),
+      transparent 70%
+    );
+  animation: foliage-sway-back 18s v.$ease-soft infinite alternate;
+  will-change: transform;
+
+  &::before {
+    filter: blur(1.2vmin);
+    box-shadow: $foliage-back-a;
+  }
+
+  &::after {
+    filter: blur(1.1vmin);
+    box-shadow: $foliage-back-b;
+  }
+}
+
+.garden__foliage--front {
+  z-index: 4;
+  opacity: 0.72;
+  background:
+    radial-gradient(
+      ellipse 24% 52% at -5% 42%,
+      rgba(2, 18, 9, 0.72),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 22% 48% at 105% 36%,
+      rgba(2, 16, 8, 0.68),
+      transparent 70%
+    );
+  animation: foliage-sway-front 14s v.$ease-soft infinite alternate;
+  will-change: transform;
+
+  &::before {
+    filter: blur(0.35vmin);
+    box-shadow: $foliage-front-a;
+  }
+
+  &::after {
+    border-radius: 0 100% 0 100%;
+    filter: blur(0.3vmin);
+    box-shadow: $foliage-front-b;
+  }
+}
+
+// ============================================================
+//  WADAH BUNGA
+// ============================================================
+.garden__flowers {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+// ============================================================
+//  AMBIENT
+//  Banyaknya pollen di-generate SCSS @for dengan box-shadow,
+//  sehingga tidak perlu menambah banyak elemen DOM.
+// ============================================================
+@function pollen-shadow($x, $y, $hue) {
+  @return #{$x} #{$y} 0 -0.18vmin #{hsla($hue, 100%, 82%, 0.72)};
+}
+
+$pollen-a: ();
+
+@for $i from 1 through list.length(v.$pollen-x-a) {
+  $hue: list.nth(v.$pollen-hues, ($i - 1) % list.length(v.$pollen-hues) + 1);
+  $pollen-a: list.append(
+    $pollen-a,
+    pollen-shadow(list.nth(v.$pollen-x-a, $i), list.nth(v.$pollen-y-a, $i), $hue),
+    comma
+  );
+}
+
+$pollen-b: ();
+
+@for $i from 1 through list.length(v.$pollen-x-b) {
+  $hue: list.nth(v.$pollen-hues, ($i + 2) % list.length(v.$pollen-hues) + 1);
+  $pollen-b: list.append(
+    $pollen-b,
+    pollen-shadow(list.nth(v.$pollen-x-b, $i), list.nth(v.$pollen-y-b, $i), $hue),
+    comma
+  );
+}
+
+.garden__ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  overflow: hidden;
+  pointer-events: none;
+
+  // Dua awan serbuk sari yang melayang di seluruh panggung.
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.3vmin;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    opacity: 0.4;
+    background: radial-gradient(
+      circle,
+      hsla(142, 100%, 92%, 0.95) 0 24%,
+      transparent 72%
+    );
+    animation: pollen-drift 34s linear -9s infinite alternate;
+    will-change: transform, opacity;
+  }
+
+  &::before {
+    z-index: 0;
+    box-shadow: $pollen-a;
+    animation-duration: 38s;
+  }
+
+  &::after {
+    z-index: 0;
+    box-shadow: $pollen-b;
+    animation-duration: 46s;
+    animation-delay: -24s;
+  }
+}
+
+// Kunang-kunang: tubuh glowing + sayap mengepak + halo berdenyut.
+@for $i from 1 through v.$firefly-count {
+  .firefly:nth-child(#{$i}) {
+    --x: #{list.nth(v.$firefly-x, $i)};
+    --y: #{list.nth(v.$firefly-y, $i)};
+    --hue: #{list.nth(v.$firefly-hue, $i)};
+    --duration: #{list.nth(v.$firefly-duration, $i)};
+    --delay: #{list.nth(v.$firefly-delay, $i)};
+    --glow-duration: #{list.nth(v.$firefly-glow-duration, $i)};
+    --flap-duration: #{list.nth(v.$firefly-flap-duration, $i)};
+    --fly-x1: #{list.nth(v.$firefly-x1, $i)};
+    --fly-y1: #{list.nth(v.$firefly-y1, $i)};
+    --fly-x2: #{list.nth(v.$firefly-x2, $i)};
+    --fly-y2: #{list.nth(v.$firefly-y2, $i)};
+    --fly-x3: #{list.nth(v.$firefly-x3, $i)};
+    --fly-y3: #{list.nth(v.$firefly-y3, $i)};
+  }
+}
+
+.firefly {
+  --hue: 184;
+  --duration: 18s;
+  --delay: 0s;
+  --glow-duration: 3.6s;
+  --flap-duration: 0.2s;
+  --fly-x1: 14vmin;
+  --fly-y1: -9vmin;
+  --fly-x2: -12vmin;
+  --fly-y2: 12vmin;
+  --fly-x3: 8vmin;
+  --fly-y3: 4vmin;
+
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  z-index: 2;
+  width: clamp(0.3rem, 0.75vmin, 0.8rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: 0.1;
+  background: radial-gradient(
+    circle,
+    #fff 0 16%,
+    hsla(var(--hue), 100%, 86%, 0.94) 32%,
+    transparent 72%
+  );
+  box-shadow:
+    0 0 1.5vmin hsla(var(--hue), 100%, 82%, 0.8),
+    0 0 4.5vmin hsla(var(--hue), 98%, 68%, 0.42);
+  animation: firefly-flight var(--duration) ease-in-out var(--delay) infinite;
+  will-change: transform, opacity;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -320%;
+    z-index: -2;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      hsla(var(--hue), 100%, 76%, 0.5) 0%,
+      hsla(var(--hue), 95%, 62%, 0.14) 34%,
+      transparent 68%
+    );
+    animation: firefly-glow var(--glow-duration) ease-in-out var(--delay)
+      infinite;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    width: 2.2vmin;
+    height: 1.05vmin;
+    translate: -50% -50%;
+    border-radius: 100% 0 100% 0;
+    opacity: 0.55;
+    background:
+      radial-gradient(
+        ellipse at 26% 42%,
+        hsla(var(--hue), 100%, 94%, 0.72),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse at 74% 42%,
+        hsla(calc(var(--hue) + 16), 100%, 92%, 0.7),
+        transparent 72%
+      );
+    transform: translate(-50%, -50%) scaleX(0.72) rotate(-8deg);
+    animation: wing-flap var(--flap-duration) ease-in-out var(--delay)
+      infinite alternate;
+  }
+}
+
+// Kelopak yang jatuh pelan dari arah bunga.
+.falling-petal {
+  --hue: 326;
+  position: absolute;
+  top: var(--top);
+  left: var(--x);
+  width: clamp(0.52rem, 1.05vmin, 0.95rem);
+  height: clamp(0.9rem, 1.9vmin, 1.6rem);
+  border-radius: 100% 0 100% 0;
+  opacity: 0;
+  background: linear-gradient(
+    158deg,
+    hsla(var(--hue), 100%, 88%, 0.92),
+    hsla(calc(var(--hue) - 14), 82%, 56%, 0.34)
+  );
+  box-shadow: 0 0 0.9vmin hsla(var(--hue), 95%, 68%, 0.28);
+  animation: petal-fall var(--duration) linear var(--delay) infinite;
+  will-change: transform, opacity;
+}
+
+.falling-petal--a {
+  --x: 22%;
+  --top: 31%;
+  --hue: 326;
+  --duration: 14s;
+  --delay: -4s;
+  --drift: 6vmin;
+}
+
+.falling-petal--b {
+  --x: 71%;
+  --top: 27%;
+  --hue: 168;
+  --duration: 17s;
+  --delay: -10s;
+  --drift: -5vmin;
+}
+
+// ============================================================
+//  AMBIENT KEYFRAMES
+// ============================================================
+@keyframes foliage-sway-back {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-0.12deg);
+  }
+  100% {
+    transform: translate3d(1.1vw, -0.8vh, 0) rotate(0.14deg);
+  }
+}
+
+@keyframes foliage-sway-front {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0.1deg);
+  }
+  100% {
+    transform: translate3d(-1.5vw, 1vh, 0) rotate(-0.16deg);
+  }
+}
+
+@keyframes sky-drift {
+  0% {
+    transform: translate3d(-1%, 0, 0) scale(1.04);
+  }
+  100% {
+    transform: translate3d(1%, -1%, 0) scale(1.08);
+  }
+}
+
+@keyframes stars-breathe {
+  0% {
+    opacity: 0.48;
+  }
+  100% {
+    opacity: 0.86;
+  }
+}
+
+@keyframes pollen-drift {
+  0% {
+    opacity: 0.12;
+    transform: translate3d(0, 0, 0);
+  }
+  28% {
+    opacity: 0.46;
+  }
+  58% {
+    opacity: 0.3;
+    transform: translate3d(5vmin, -3vmin, 0);
+  }
+  82% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0.12;
+    transform: translate3d(-3vmin, 6vmin, 0);
+  }
+}
+
+@keyframes firefly-flight {
+  0% {
+    opacity: 0.1;
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  20% {
+    opacity: 0.95;
+  }
+  34% {
+    opacity: 0.72;
+    transform: translate3d(var(--fly-x1), var(--fly-y1), 0) rotate(6deg);
+  }
+  60% {
+    opacity: 0.6;
+  }
+  70% {
+    opacity: 0.92;
+    transform: translate3d(var(--fly-x2), var(--fly-y2), 0) rotate(-5deg);
+  }
+  86% {
+    opacity: 0.66;
+  }
+  94% {
+    opacity: 0.95;
+    transform: translate3d(var(--fly-x3), var(--fly-y3), 0) rotate(3deg);
+  }
+  100% {
+    opacity: 0.1;
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+
+@keyframes firefly-glow {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.82);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.18);
+  }
+}
+
+@keyframes wing-flap {
+  0% {
+    opacity: 0.25;
+    transform: translate(-50%, -50%) scaleX(0.25) rotate(-10deg);
+  }
+  50% {
+    opacity: 0.68;
+    transform: translate(-50%, -50%) scaleX(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0.25;
+    transform: translate(-50%, -50%) scaleX(0.25) rotate(10deg);
+  }
+}
+
+@keyframes petal-fall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -4vmin, 0) rotate(0deg);
+  }
+  9% {
+    opacity: 0.78;
+  }
+  82% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--drift), 105vh, 0) rotate(640deg);
+  }
+}
+
+// ============================================================
+//  RESPONSIF + REDUCED MOTION
+// ============================================================
+@media (max-width: 600px) {
+  .flower--near {
+    --depth-blur: 0.7px;
+  }
+
+  .garden::before {
+    background: radial-gradient(
+      ellipse at 50% 44%,
+      transparent 30%,
+      rgba(1, 10, 5, 0.3) 74%,
+      rgba(0, 8, 4, 0.66) 100%
+    );
+  }
+
+  .garden__foliage--front {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .garden__sky::before,
+  .garden__sky::after,
+  .garden__foliage--back,
+  .garden__foliage--front,
+  .firefly,
+  .falling-petal {
+    animation: none !important;
+  }
+
+  .garden__ambient {
+    display: none;
+  }
+}

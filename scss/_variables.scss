@@ -1,0 +1,215 @@
+@use "sass:math";
+
+// ============================================================
+//  KOMPOSISI
+//  Ubah $flower-count untuk menampilkan lebih sedikit bunga.
+//  HTML menyediakan kapasitas 14 bunga; untuk menambah melewati
+//  14, duplikasi satu blok .flower dan naikkan $flower-capacity.
+// ============================================================
+$flower-count: 14;
+$flower-capacity: 14;
+
+// ============================================================
+//  PALET
+//  Cyan/teal adalah dasar; pink, violet, dan pearl menjadi aksen.
+// ============================================================
+$palette: (
+  cyan: 184,
+  teal: 168,
+  pink: 326,
+  violet: 274,
+  pearl: 195,
+);
+
+// Hue yang dipakai untuk serbuk sari ambient.
+$pollen-hues: 142, 96, 64, 160, 46;
+
+// ============================================================
+//  TIMING + EASING
+// ============================================================
+$stem-duration: 1.05s;
+$leaf-duration: 0.8s;
+$petal-duration: 1.25s;
+$core-duration: 0.9s;
+$core-pulse-duration: 4.5s;
+$bloom-breathe-duration: 5.5s;
+
+$ease-grow: cubic-bezier(0.2, 0.82, 0.25, 1);
+$ease-bloom: cubic-bezier(0.18, 0.89, 0.32, 1.08);
+$ease-soft: ease-in-out;
+
+// ============================================================
+//  DATA PER BUNGA (deterministik, bukan acak)
+//  Urutan ini mengikuti urutan .flower di flower.html.
+// ============================================================
+$flower-x: 8%, 92%, 21%, 38%, 61%, 78%, 49%, 15%, 31%, 57%, 85%, 24%, 66%, 44%;
+
+$flower-delay: 0.2s, 1.1s, 1.85s, 0.55s, 0.95s, 1.45s, 2.15s, 0.75s, 1.7s,
+  2.45s, 0.05s, 1.3s, 2.65s, 0.9s;
+
+$flower-hue: 184, 326, 168, 325, 274, 184, 195, 274, 326, 168, 326, 168, 195,
+  274;
+
+$flower-scale: 1.34, 1.42, 1.22, 1, 1.04, 0.94, 0.9, 0.74, 0.7, 0.68, 0.76,
+  0.54, 0.5, 0.56;
+
+$flower-sway: 3.2deg, -2.8deg, 2.6deg, -3.4deg, 2.4deg, -3deg, 2.2deg, 3deg,
+  -2.6deg, 2.8deg, -3.2deg, 2.4deg, -2.2deg, 3deg;
+
+$flower-sway-duration: 9s, 11s, 10s, 8.5s, 10.5s, 9.5s, 12s, 10s, 11s, 9s,
+  12.5s, 10.5s, 9.8s, 11.5s;
+
+$flower-lean: 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1;
+
+// ============================================================
+//  KUNANG-KUNANG
+//  Semua variasi digenerate SCSS; jumlahnya bisa diubah lewat
+//  $firefly-count.
+// ============================================================
+$firefly-count: 5;
+$firefly-x: 12%, 28%, 46%, 68%, 86%;
+$firefly-y: 22%, 38%, 55%, 30%, 47%;
+$firefly-hue: 46, 56, 150, 32, 96;
+$firefly-duration: 18s, 23s, 20s, 26s, 21s;
+$firefly-delay: -4s, -12s, -7s, -17s, -2s;
+$firefly-glow-duration: 3.2s, 4.1s, 3.6s, 4.8s, 3.9s;
+$firefly-flap-duration: 0.18s, 0.22s, 0.25s, 0.2s, 0.24s;
+
+$firefly-x1: 18vmin, -24vmin, 14vmin, -18vmin, 22vmin;
+$firefly-y1: -10vmin, 9vmin, -14vmin, 12vmin, -7vmin;
+$firefly-x2: -14vmin, 17vmin, -20vmin, 21vmin, -15vmin;
+$firefly-y2: 15vmin, -11vmin, 9vmin, -13vmin, 16vmin;
+$firefly-x3: 9vmin, -8vmin, 12vmin, -11vmin, 8vmin;
+$firefly-y3: 5vmin, -12vmin, 4vmin, 9vmin, -10vmin;
+
+// ============================================================
+//  SERBUK SARI AMBIENT
+//  Dipakai untuk membuat banyak titik dari box-shadow @for.
+// ============================================================
+$pollen-x-a: -62vw, -48vw, -37vw, -24vw, -12vw, 4vw, 18vw, 32vw, 45vw, 58vw,
+  68vw, -6vw, 26vw, -30vw, 10vw, 50vw;
+$pollen-y-a: -48vh, -20vh, 8vh, 34vh, -38vh, 22vh, 44vh, -10vh, 30vh, -30vh,
+  12vh, 52vh, -58vh, 58vh, 0vh, 40vh;
+$pollen-x-b: -55vw, -32vw, -16vw, 0vw, 14vw, 28vw, 42vw, 56vw, -44vw, -20vw,
+  6vw, 22vw, 38vw, -58vw, -8vw, 50vw;
+$pollen-y-b: 42vh, -44vh, 26vh, -52vh, 10vh, -26vh, 38vh, -6vh, 54vh, -14vh,
+  50vh, -38vh, 20vh, 4vh, -58vh, 32vh;
+
+// ============================================================
+//  LEMPARAN DEDAUNAN
+//  Array ini dipakai @for di style.scss untuk membentuk banyak
+//  daun hanya dari box-shadow, tanpa menambah banyak elemen.
+// ============================================================
+$foliage-back-a-x: -8vw, -2vw, 6vw, 14vw, 22vw, 30vw, 40vw, 50vw, 60vw, 70vw,
+  78vw, 86vw, 94vw, 100vw;
+$foliage-back-a-y: -4vh, 3vh, -6vh, 5vh, -2vh, 6vh, -5vh, 1vh, -7vh, 4vh, -1vh,
+  7vh, -3vh, 0vh;
+$foliage-back-a-spread: -1vmin, -3vmin, -5vmin, -2vmin, -4vmin, -6vmin, -2vmin,
+  -5vmin, -3vmin, -6vmin, -1vmin, -4vmin, -2vmin, -5vmin;
+
+$foliage-back-b-x: -10vw, -7vw, -5vw, -3vw, 101vw, 99vw, 97vw, 95vw, 104vw,
+  -12vw, 103vw, -9vw;
+$foliage-back-b-y: 8vh, 16vh, 26vh, 36vh, 10vh, 18vh, 28vh, 40vh, 2vh, 52vh,
+  60vh, 44vh;
+$foliage-back-b-spread: -2vmin, -4vmin, -1vmin, -5vmin, -2vmin, -3vmin, -5vmin,
+  -1vmin, -4vmin, -2vmin, -5vmin, -3vmin;
+
+$foliage-front-a-x: -7vw, -3vw, -1vw, -5vw, -2vw, -4vw, -8vw, -1vw;
+$foliage-front-a-y: 12vh, 26vh, 40vh, 56vh, 70vh, 18vh, 50vh, 34vh;
+$foliage-front-a-spread: 1vmin, -1vmin, 0vmin, -2vmin, -1vmin, 0vmin, -2vmin,
+  -1vmin;
+
+$foliage-front-b-x: 106vw, 102vw, 98vw, 104vw, 97vw, 101vw, 107vw, 96vw;
+$foliage-front-b-y: 8vh, 22vh, 36vh, 52vh, 66vh, 30vh, 44vh, 18vh;
+$foliage-front-b-spread: 1vmin, -1vmin, 0vmin, -2vmin, -1vmin, 0vmin, -2vmin,
+  -1vmin;
+
+$foliage-hues: 142, 152, 132, 160, 128;
+$foliage-lights: 10, 14, 12, 16, 11;
+
+// ============================================================
+//  DEPTH LAYERS
+// ============================================================
+$depths: (
+  near: (
+    opacity: 0.94,
+    blur: 1.15px,
+    saturation: 1.05,
+    z: 5,
+    bottom: -2%,
+  ),
+  mid: (
+    opacity: 1,
+    blur: 0.1px,
+    saturation: 1,
+    z: 4,
+    bottom: 3%,
+  ),
+  back: (
+    opacity: 0.72,
+    blur: 0.55px,
+    saturation: 0.86,
+    z: 3,
+    bottom: 8%,
+  ),
+  deep: (
+    opacity: 0.46,
+    blur: 1.05px,
+    saturation: 0.72,
+    z: 2,
+    bottom: 13%,
+  ),
+);
+
+// ============================================================
+//  TIPE BUNGA
+// ============================================================
+$types: (
+  classic: (
+    bloom: clamp(4.5rem, 14vmin, 12rem),
+    petal-w: 36%,
+    petal-h: 50%,
+    petal-start: 1.5s,
+    petal-duration: 1.3s,
+    twist: 24deg,
+    core-size: 24%,
+    breathe: 5.5s,
+  ),
+  daisy: (
+    bloom: clamp(5rem, 15vmin, 13rem),
+    petal-w: 18%,
+    petal-h: 49%,
+    petal-start: 1.65s,
+    petal-duration: 1.1s,
+    twist: 18deg,
+    core-size: 31%,
+    breathe: 6s,
+  ),
+  trumpet: (
+    bloom: clamp(4.5rem, 13.5vmin, 11.5rem),
+    petal-w: 23%,
+    petal-h: 49%,
+    petal-start: 1.45s,
+    petal-duration: 1.2s,
+    twist: 18deg,
+    core-size: 22%,
+    breathe: 5s,
+  ),
+  bud: (
+    bloom: clamp(3.75rem, 10.5vmin, 9rem),
+    petal-w: 28%,
+    petal-h: 43%,
+    petal-start: 2.15s,
+    petal-duration: 1.15s,
+    twist: 10deg,
+    core-size: 21%,
+    breathe: 6.5s,
+  ),
+);
+
+$petal-counts: (
+  classic: 5,
+  daisy: 8,
+  trumpet: 6,
+  bud: 5,
+);
