@@ -24,6 +24,21 @@ Buka `flower.html` langsung di browser, atau jalankan static server:
 npx serve .
 ```
 
+## Build SCSS
+
+File `css/style.css` adalah hasil kompilasi dari folder `scss/`, jadi setiap kali
+mengubah file SCSS, kompilasi ulang dengan salah satu perintah berikut:
+
+```bash
+npx sass scss/style.scss css/style.css
+```
+
+```bash
+sass --watch scss/style.scss css/style.css
+```
+
+Perintah kedua akan mengompilasi ulang otomatis setiap kali file SCSS disimpan.
+
 ## Kredit
 
 Dibuat oleh [fadhilfaith48](https://github.com/fadhilfaith48).
