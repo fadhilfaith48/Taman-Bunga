@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#010507" />
+    <meta
+      name="description"
+      content="Taman bunga malam dengan bunga glowing cyan, teal, pink, ungu, dan putih yang mekar perlahan."
+    />
+    <title>Taman Bunga Malam</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="page page--garden">
+    <main class="garden" aria-labelledby="garden-title">
+      <h1 class="sr-only" id="garden-title">Taman Bunga Malam</h1>
+
+      <div class="garden__sky" aria-hidden="true"></div>
+
+      <!-- Dedaunan berlapis: belakang untuk kedalaman, depan sebagai framing. -->
+      <div class="garden__foliage garden__foliage--back" aria-hidden="true"></div>
+      <div class="garden__foliage garden__foliage--front" aria-hidden="true"></div>
+
+      <!--
+        14 bunga, 4 lapis kedalaman.
+        Urutan ini terhubung ke data posisi/warna/delay di _variables.scss.
+        Untuk menambah bunga: duplikasi satu blok .flower, lalu sesuaikan array.
+      -->
+      <div class="garden__flowers" aria-hidden="true">
+        <!-- 01 · near · classic · cyan -->
+        <div class="flower flower--classic flower--near">
+          <span class="flower__stem"></span>
+          <div class="flower__bloom">
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__core"></span>
+          </div>
+        </div>
+
+        <!-- 02 · near · daisy · pink -->
+        <div class="flower flower--daisy flower--near">
+          <span class="flower__stem"></span>
+          <div class="flower__bloom">
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__core"></span>
+          </div>
+        </div>
+
+        <!-- 03 · near · trumpet · teal -->
+        <div class="flower flower--trumpet flower--near">
+          <span class="flower__stem"></span>
+          <div class="flower__bloom">
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__core"></span>
+          </div>
+        </div>
+
+        <!-- 04 · mid · classic · pink -->
+        <div class="flower flower--classic flower--mid">
+          <span class="flower__stem"></span>
+          <div class="flower__bloom">
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__core"></span>
+          </div>
+        </div>
+
+        <!-- 05 · mid · daisy · violet -->
+        <div class="flower flower--daisy flower--mid">
+          <span class="flower__stem"></span>
+          <div class="flower__bloom">
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__core"></span>
+          </div>
+        </div>
+
+        <!-- 06 · mid · trumpet · cyan -->
+        <div class="flower flower--trumpet flower--mid">
+          <span class="flower__stem"></span>
+          <div class="flower__bloom">
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__core"></span>
+          </div>
+        </div>
+
+        <!-- 07 · mid · bud · pearl -->
+        <div class="flower flower--bud flower--mid">
+          <span class="flower__stem"></span>
+          <div class="flower__bloom">
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__core"></span>
+          </div>
+        </div>
+
+        <!-- 08 · back · classic · violet -->
+        <div class="flower flower--classic flower--back">
+          <span class="flower__stem"></span>
+          <div class="flower__bloom">
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__core"></span>
+          </div>
+        </div>
+
+        <!-- 09 · back · trumpet · pink -->
+        <div class="flower flower--trumpet flower--back">
+          <span class="flower__stem"></span>
+          <div class="flower__bloom">
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__core"></span>
+          </div>
+        </div>
+
+        <!-- 10 · back · daisy · teal -->
+        <div class="flower flower--daisy flower--back">
+          <span class="flower__stem"></span>
+          <div class="flower__bloom">
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__core"></span>
+          </div>
+        </div>
+
+        <!-- 11 · back · bud · pink -->
+        <div class="flower flower--bud flower--back">
+          <span class="flower__stem"></span>
+          <div class="flower__bloom">
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__core"></span>
+          </div>
+        </div>
+
+        <!-- 12 · deep · classic · teal -->
+        <div class="flower flower--classic flower--deep">
+          <span class="flower__stem"></span>
+          <div class="flower__bloom">
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__core"></span>
+          </div>
+        </div>
+
+        <!-- 13 · deep · trumpet · pearl -->
+        <div class="flower flower--trumpet flower--deep">
+          <span class="flower__stem"></span>
+          <div class="flower__bloom">
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__core"></span>
+          </div>
+        </div>
+
+        <!-- 14 · deep · bud · violet -->
+        <div class="flower flower--bud flower--deep">
+          <span class="flower__stem"></span>
+          <div class="flower__bloom">
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__petal"></span>
+            <span class="flower__core"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="garden__ambient" aria-hidden="true">
+        <span class="firefly"></span>
+        <span class="firefly"></span>
+        <span class="firefly"></span>
+        <span class="firefly"></span>
+        <span class="firefly"></span>
+        <span class="falling-petal falling-petal--a"></span>
+        <span class="falling-petal falling-petal--b"></span>
+      </div>
+    </main>
+  </body>
+</html>
