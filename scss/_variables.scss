@@ -390,3 +390,24 @@ $snails: (
     z: 2,
   ),
 );
+
+// ============================================================
+//  SCENE 3D (parallax panggung)
+//  Jarak tiap lapisan dari kamera, dalam px:
+//  negatif = jauh, positif = dekat. Bunga tetap di 0 (subjek).
+//  Dipakai @each di style.scss; skala kompensasinya dihitung
+//  @function depth-scale supaya tampilan istirahat tidak bergeser.
+// ============================================================
+$scene-perspective: 1400px;
+$scene-overscan: 1.05; // margin aman saat kamera miring
+
+$scene-layers: (
+  sky: -95,
+  moon: -80,
+  trees: -65,
+  "foliage--back": -45,
+  vines: -30,
+  flowers: 0,
+  "foliage--front": 36,
+  ambient: 40,
+);

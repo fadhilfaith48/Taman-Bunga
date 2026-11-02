@@ -1517,6 +1517,75 @@ body.page--garden {
   filter: blur(1.5vmin);
 }
 
+.garden {
+  perspective: 1400px;
+  perspective-origin: 50% 46%;
+}
+
+.garden__camera {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: camera-idle 46s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.garden__sky {
+  --layer-z: -95px;
+  --layer-scale: 1.0678571429;
+  translate: 0 0 var(--layer-z);
+  scale: var(--layer-scale);
+}
+
+.garden__moon {
+  --layer-z: -80px;
+  --layer-scale: 1.0571428571;
+  translate: 0 0 var(--layer-z);
+  scale: var(--layer-scale);
+}
+
+.garden__trees {
+  --layer-z: -65px;
+  --layer-scale: 1.0464285714;
+  translate: 0 0 var(--layer-z);
+  scale: var(--layer-scale);
+}
+
+.garden__foliage--back {
+  --layer-z: -45px;
+  --layer-scale: 1.0321428571;
+  translate: 0 0 var(--layer-z);
+  scale: var(--layer-scale);
+}
+
+.garden__vines {
+  --layer-z: -30px;
+  --layer-scale: 1.0214285714;
+  translate: 0 0 var(--layer-z);
+  scale: var(--layer-scale);
+}
+
+.garden__flowers {
+  --layer-z: 0px;
+  --layer-scale: 1;
+  translate: 0 0 var(--layer-z);
+  scale: var(--layer-scale);
+}
+
+.garden__foliage--front {
+  --layer-z: 36px;
+  --layer-scale: 0.9742857143;
+  translate: 0 0 var(--layer-z);
+  scale: var(--layer-scale);
+}
+
+.garden__ambient {
+  --layer-z: 40px;
+  --layer-scale: 0.9714285714;
+  translate: 0 0 var(--layer-z);
+  scale: var(--layer-scale);
+}
+
 .garden__sky {
   position: absolute;
   inset: 0;
@@ -1927,6 +1996,14 @@ body.page--garden {
     transform: translate3d(1%, -1%, 0) scale(1.08);
   }
 }
+@keyframes camera-idle {
+  0% {
+    transform: scale(1.05) rotateX(calc(var(--cam-rx, 0deg) + 0.5deg)) rotateY(calc(var(--cam-ry, 0deg) - 1.4deg));
+  }
+  100% {
+    transform: scale(1.05) rotateX(calc(var(--cam-rx, 0deg) - 0.4deg)) rotateY(calc(var(--cam-ry, 0deg) + 1.4deg));
+  }
+}
 @keyframes tree-breathe {
   0% {
     transform: translate3d(0, 0, 0) scaleX(1);
@@ -2083,6 +2160,7 @@ body.page--garden {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .garden__camera,
   .garden__sky::before,
   .garden__sky::after,
   .garden__foliage--back,

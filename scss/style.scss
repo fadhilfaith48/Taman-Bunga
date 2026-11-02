@@ -1,4 +1,6 @@
 @use "sass:list";
+@use "sass:map";
+@use "sass:math";
 @use "variables" as v;
 @use "flowers";
 @use "creatures";
@@ -129,6 +131,44 @@ body.page--garden {
         rgba(1, 12, 7, 0.94) 100%
       );
     filter: blur(1.5vmin);
+  }
+}
+
+// ============================================================
+//  KAMERA 3D + LAPISAN DALAM
+//  .garden membawa perspektif; .garden__camera membawa
+//  orientasi kamera (drift CSS + --cam-* dari JS) dan
+//  overscan agar tidak ada celah tepi saat kamera miring.
+//  Tiap lapisan diberi translateZ + skala kompensasi dari
+//  @function depth-scale sehingga posisi istirahat identik
+//  dengan versi 2D — kedalaman baru terbaca saat kamera bergerak.
+// ============================================================
+@function depth-scale($z) {
+  @return math.div(v.$scene-perspective - $z, v.$scene-perspective);
+}
+
+.garden {
+  perspective: v.$scene-perspective;
+  perspective-origin: 50% 46%;
+}
+
+.garden__camera {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  // Drift kamera + offset dari JS digabung di keyframes yang sama
+  // lewat var(--cam-*), jadi keduanya tidak saling menimpa.
+  animation: camera-idle 46s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+// Kedalaman per lapisan — satu @each untuk seluruh panggung.
+@each $name, $z in v.$scene-layers {
+  .garden__#{$name} {
+    --layer-z: #{$z * 1px};
+    --layer-scale: #{depth-scale($z * 1px)};
+    translate: 0 0 var(--layer-z);
+    scale: var(--layer-scale);
   }
 }
 
@@ -821,6 +861,24 @@ $pollen-b: ();
 }
 
 // ============================================================
+//  KEYFRAMES KAMERA (Scene 3D)
+// ============================================================
+// Drift kamera yang sangat halus. Var(--cam-*) dari JS
+// menambahkan offset orientasi tanpa menimpa drift ini.
+@keyframes camera-idle {
+  0% {
+    transform: scale(v.$scene-overscan)
+      rotateX(calc(var(--cam-rx, 0deg) + 0.5deg))
+      rotateY(calc(var(--cam-ry, 0deg) - 1.4deg));
+  }
+  100% {
+    transform: scale(v.$scene-overscan)
+      rotateX(calc(var(--cam-rx, 0deg) - 0.4deg))
+      rotateY(calc(var(--cam-ry, 0deg) + 1.4deg));
+  }
+}
+
+// ============================================================
 //  KEYFRAMES LATAR JAUH (Langkah 5)
 // ============================================================
 // Batang pohon bernapas nyaris tak terasa.
@@ -1005,6 +1063,7 @@ $pollen-b: ();
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .garden__camera,
   .garden__sky::before,
   .garden__sky::after,
   .garden__foliage--back,

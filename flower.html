@@ -15,6 +15,13 @@
     <main class="garden" aria-labelledby="garden-title">
       <h1 class="sr-only" id="garden-title">Taman Bunga Malam</h1>
 
+      <!--
+        Kamera 3D: pembungkus seluruh panggung agar perspektif,
+        orientasi kamera, dan kedalaman per lapisan berada di satu
+        konteks. Elemen di bawah ini tidak perlu diubah posisinya.
+      -->
+      <div class="garden__camera">
+
       <div class="garden__sky" aria-hidden="true"></div>
 
       <!-- Dedaunan berlapis: belakang untuk kedalaman, depan sebagai framing. -->
@@ -316,6 +323,7 @@
         <span class="falling-petal falling-petal--a"></span>
         <span class="falling-petal falling-petal--b"></span>
       </div>
+      </div><!-- /.garden__camera -->
     </main>
   </body>
 </html>
