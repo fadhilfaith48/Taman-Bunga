@@ -156,6 +156,10 @@ body.page--garden {
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
+  // Overscan statis di properti `scale` (bukan di keyframes) agar
+  // browser tidak perlu re-raster setiap frame — hanya rotasi yang
+  // dianimasikan.
+  scale: v.$scene-overscan;
   // Drift kamera + offset dari JS digabung di keyframes yang sama
   // lewat var(--cam-*), jadi keduanya tidak saling menimpa.
   animation: camera-idle 46s ease-in-out infinite alternate;
@@ -867,13 +871,11 @@ $pollen-b: ();
 // menambahkan offset orientasi tanpa menimpa drift ini.
 @keyframes camera-idle {
   0% {
-    transform: scale(v.$scene-overscan)
-      rotateX(calc(var(--cam-rx, 0deg) + 0.5deg))
+    transform: rotateX(calc(var(--cam-rx, 0deg) + 0.5deg))
       rotateY(calc(var(--cam-ry, 0deg) - 1.4deg));
   }
   100% {
-    transform: scale(v.$scene-overscan)
-      rotateX(calc(var(--cam-rx, 0deg) - 0.4deg))
+    transform: rotateX(calc(var(--cam-rx, 0deg) - 0.4deg))
       rotateY(calc(var(--cam-ry, 0deg) + 1.4deg));
   }
 }

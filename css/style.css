@@ -1526,6 +1526,7 @@ body.page--garden {
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
+  scale: 1.05;
   animation: camera-idle 46s ease-in-out infinite alternate;
   will-change: transform;
 }
@@ -1998,10 +1999,10 @@ body.page--garden {
 }
 @keyframes camera-idle {
   0% {
-    transform: scale(1.05) rotateX(calc(var(--cam-rx, 0deg) + 0.5deg)) rotateY(calc(var(--cam-ry, 0deg) - 1.4deg));
+    transform: rotateX(calc(var(--cam-rx, 0deg) + 0.5deg)) rotateY(calc(var(--cam-ry, 0deg) - 1.4deg));
   }
   100% {
-    transform: scale(1.05) rotateX(calc(var(--cam-rx, 0deg) - 0.4deg)) rotateY(calc(var(--cam-ry, 0deg) + 1.4deg));
+    transform: rotateX(calc(var(--cam-rx, 0deg) - 0.4deg)) rotateY(calc(var(--cam-ry, 0deg) + 1.4deg));
   }
 }
 @keyframes tree-breathe {
