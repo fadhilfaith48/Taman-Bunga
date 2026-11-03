@@ -1,0 +1,24 @@
+name: Build & cek CSS
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check-css:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependency
+        run: npm ci
+
+      # Pastikan css/style.css tidak ketinggalan setelah SCSS berubah.
+      - name: Cek css/style.css sinkron dengan scss/
+        run: npm run check

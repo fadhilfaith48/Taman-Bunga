@@ -1,19 +1,45 @@
 # Taman Bunga
 
-Taman bunga malam interaktif yang dibuat dengan HTML dan CSS (SCSS). Bunga-bunga
-berwarna cyan, teal, pink, ungu, dan putih mekar perlahan dengan efek glowing.
+Taman bunga malam interaktif yang dibuat dengan HTML, CSS (SCSS), dan sedikit
+JavaScript. Bunga glowing cyan, teal, pink, ungu, dan putih mekar perlahan,
+dilengkapi kupu-kupu 3D, capung, kepik, siput, lapisan dedaunan, dan parallax
+kamera yang mengikuti pointer — semuanya tanpa gambar, SVG eksternal, atau
+library pihak ketiga.
+
+## Fitur
+
+- **Bunga sebagai subjek utama** — 14 bunga, 4 lapis kedalaman, kelopak dengan
+  urat dan embun, napas & goyang berlapis.
+- **Makhluk CSS** — 5 kupu-kupu (kepakan `rotateY` 3D), 2 capung bersayap
+  berurat, 3 kepik, 3 siput spiral. Tanpa elemen gambar.
+- **Taman berlapis** — siluet pohon, sulur, glow bulan, spora, firefly, dan
+  dedaunan framing.
+- **Kamera 3D** — `perspective` + `translateZ` per lapisan (`$scene-layers`)
+  dengan skala kompensasi otomatis, drift halus, dan parallax mengikuti pointer
+  lewat JS minimal (`js/scene.js`, opsional).
+- **Aksesibilitas** — semua gerakan berhenti pada `prefers-reduced-motion`,
+  elemen dekoratif `aria-hidden`, heading tersembunyi tetap ada.
+- **Responsif** — tanpa scroll horizontal di 360–1920 px, ukuran memakai
+  `clamp()`/`vmin`/`svh`.
 
 ## Struktur Proyek
 
 ```
 Taman Bunga Prroyek/
-├── flower.html          # Halaman utama
+├── flower.html              # Halaman utama
 ├── css/
-│   └── style.css        # CSS hasil kompilasi (dipakai flower.html)
-└── scss/
-    ├── _variables.scss  # Variabel warna, posisi, dan delay bunga
-    ├── _flowers.scss    # Komponen bunga dan taman
-    └── style.scss       # Entry point SCSS
+│   └── style.css            # Hasil kompilasi SCSS (dipakai flower.html)
+├── js/
+│   └── scene.js             # Parallax pointer (opsional, progresif)
+├── scss/
+│   ├── _variables.scss      # Data: posisi bunga, palet, makhluk, scene 3D
+│   ├── _flowers.scss        # Komponen bunga + kemiringan 3D mahkota
+│   ├── _creatures.scss      # Kupu-kupu, capung, kepik, siput
+│   └── style.scss           # Entry point: panggung, latar, lapisan 3D
+├── scripts/
+│   └── check-css.js         # Cek css/style.css masih sinkron dengan scss/
+├── .github/workflows/ci.yml # CI: build & cek sinkron CSS
+└── package.json             # Script build/check + versi sass terkunci
 ```
 
 ## Cara Menjalankan
@@ -26,18 +52,19 @@ npx serve .
 
 ## Build SCSS
 
-File `css/style.css` adalah hasil kompilasi dari folder `scss/`, jadi setiap kali
-mengubah file SCSS, kompilasi ulang dengan salah satu perintah berikut:
+`css/style.css` adalah hasil kompilasi folder `scss/`. Instalasi awal + build:
 
 ```bash
-npx sass scss/style.scss css/style.css
+npm install     # sekali saja, mengunci versi sass
+npm run build   # kompilasi scss/style.scss -> css/style.css
+npm run watch   # kompilasi ulang otomatis saat file SCSS disimpan
+npm run check   # pastikan css/style.css sinkron dengan scss/
 ```
 
-```bash
-sass --watch scss/style.scss css/style.css
-```
+Tanpa npm pun masih bisa: `npx sass scss/style.scss css/style.css --no-source-map`.
 
-Perintah kedua akan mengompilasi ulang otomatis setiap kali file SCSS disimpan.
+> Setiap perubahan SCSS wajib diikuti `npm run build` lalu commit bersama
+> perubahannya. GitHub Actions menjalankan `npm run check` di setiap push.
 
 ## Kredit
 

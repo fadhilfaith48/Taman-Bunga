@@ -1,0 +1,20 @@
+{
+  "name": "taman-bunga",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Taman bunga malam interaktif — HTML, SCSS/CSS, dan parallax JS minimal.",
+  "license": "MIT",
+  "author": "fadhilfaith48",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fadhilfaith48/Taman-Bunga.git"
+  },
+  "scripts": {
+    "build": "sass scss/style.scss css/style.css --no-source-map",
+    "watch": "sass --watch scss/style.scss css/style.css --no-source-map",
+    "check": "node scripts/check-css.js"
+  },
+  "devDependencies": {
+    "sass": "^1.107.1"
+  }
+}
