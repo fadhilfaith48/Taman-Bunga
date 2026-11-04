@@ -46,6 +46,10 @@ Taman Bunga Prroyek/
 │   └── style.scss           # Entry point: panggung, latar, lapisan 3D
 ├── scripts/
 │   └── check-css.js         # Cek css/style.css masih sinkron dengan scss/
+├── tests/
+│   ├── helpers.js           # Deteksi browser + URL tes
+│   ├── qa.js                # QA 6 viewport, reduced-motion, FPS
+│   └── parallax.js          # Uji kedalaman parallax per lapisan
 ├── .github/workflows/ci.yml # CI: build & cek sinkron CSS
 ├── LICENSE                  # MIT
 └── package.json             # Script build/check + versi sass terkunci
@@ -77,6 +81,17 @@ Tanpa npm pun masih bisa: `npx sass scss/style.scss css/style.css --no-source-ma
 
 > Setiap perubahan SCSS wajib diikuti `npm run build` lalu commit bersama
 > perubahannya. GitHub Actions menjalankan `npm run check` di setiap push.
+
+## Tes
+
+```bash
+npm test        # QA 6 viewport + reduced-motion + FPS + uji parallax
+```
+
+Tes berjalan tanpa server (langsung `file://index.html`); set `SITE_URL`
+untuk menguji alamat lain, mis. `SITE_URL=http://127.0.0.1:8080/index.html npm test`.
+Browser diambil dari Chrome/Chromium yang terpasang — set `CHROME_PATH`
+kalau lokasinya berbeda. Detail: `tests/qa.js` dan `tests/parallax.js`.
 
 ## Kredit
 
