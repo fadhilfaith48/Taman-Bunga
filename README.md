@@ -1,10 +1,15 @@
 # Taman Bunga
 
+[![Build & cek CSS](https://github.com/fadhilfaith48/Taman-Bunga/actions/workflows/ci.yml/badge.svg)](https://github.com/fadhilfaith48/Taman-Bunga/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 Taman bunga malam interaktif yang dibuat dengan HTML, CSS (SCSS), dan sedikit
 JavaScript. Bunga glowing cyan, teal, pink, ungu, dan putih mekar perlahan,
 dilengkapi kupu-kupu 3D, capung, kepik, siput, lapisan dedaunan, dan parallax
 kamera yang mengikuti pointer — semuanya tanpa gambar, SVG eksternal, atau
 library pihak ketiga.
+
+**Live:** <https://fadhilfaith48.github.io/Taman-Bunga/>
 
 ## Fitur
 
@@ -26,9 +31,12 @@ library pihak ketiga.
 
 ```
 Taman Bunga Prroyek/
-├── flower.html              # Halaman utama
+├── index.html              # Halaman utama (dilayani GitHub Pages)
+├── flower.html             # Pengalih ke index.html (link lama tetap hidup)
+├── assets/
+│   └── og-cover.png        # Gambar pratinjau tautan (og:image)
 ├── css/
-│   └── style.css            # Hasil kompilasi SCSS (dipakai flower.html)
+│   └── style.css            # Hasil kompilasi SCSS (dipakai index.html)
 ├── js/
 │   └── scene.js             # Parallax pointer (opsional, progresif)
 ├── scss/
@@ -39,16 +47,20 @@ Taman Bunga Prroyek/
 ├── scripts/
 │   └── check-css.js         # Cek css/style.css masih sinkron dengan scss/
 ├── .github/workflows/ci.yml # CI: build & cek sinkron CSS
+├── LICENSE                  # MIT
 └── package.json             # Script build/check + versi sass terkunci
 ```
 
 ## Cara Menjalankan
 
-Buka `flower.html` langsung di browser, atau jalankan static server:
+Buka `index.html` langsung di browser, atau jalankan static server:
 
 ```bash
 npx serve .
 ```
+
+Versi live bisa diakses di <https://fadhilfaith48.github.io/Taman-Bunga/>
+(GitHub Pages). `flower.html` tetap ada sebagai pengalih ke `index.html`.
 
 ## Build SCSS
 
