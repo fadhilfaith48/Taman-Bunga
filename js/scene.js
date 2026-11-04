@@ -5,14 +5,16 @@
 //  menggabungkannya dengan drift kamera.
 //
 //  Aman tanpa JS: halaman tetap jalan dengan drift CSS.
-//  Aman saat prefers-reduced-motion / layar sentuh: tidak ada
-//  listener yang dipasang.
+//  Aman saat prefers-reduced-motion: tidak ada listener yang
+//  dipasang. Di layar sentuh, parallax mengikuti jari saat digeser.
 // ============================================================
 (() => {
   const stage = document.querySelector('.garden__camera');
   if (!stage) return;
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if (matchMedia('(pointer: coarse)').matches) return;
+  // Layar sentuh tetap dilayani: pointermove juga dipicu saat jari
+  // menyentuh layar, jadi parallax aktif selama digeser (di desktop
+  // aktif selama kursor bergerak).
 
   const MAX_TILT_X = 2.2; // rotateX, derajat
   const MAX_TILT_Y = 3.2; // rotateY, derajat
