@@ -104,7 +104,6 @@
   filter: blur(var(--depth-blur, 0)) saturate(var(--depth-saturation, 1));
   animation: flower-sway var(--sway-duration) v.$ease-soft var(--delay)
     infinite alternate both;
-  will-change: transform;
   pointer-events: none;
 
   // Dua daun kecil pada tangkai. Pseudo-element dipakai agar DOM ringan.
@@ -214,7 +213,6 @@
   transform-style: preserve-3d;
   animation: bloom-breathe var(--breathe-duration) v.$ease-soft
     calc(var(--delay) + var(--petal-start) + 1.6s) infinite alternate;
-  will-change: transform;
 }
 
 .flower__petal {
@@ -421,7 +419,6 @@
       hsla(calc(var(--hue) - 22), 100%, 78%, 0.7);
   animation: pollen-orbit 8.6s v.$ease-soft
     calc(var(--delay) + var(--petal-start) + 1.35s) infinite;
-  will-change: transform, opacity;
 }
 
 // ============================================================
@@ -451,7 +448,6 @@
       calc(var(--delay) + var(--petal-start) + 0.7s) both,
     core-pulse v.$core-pulse-duration v.$ease-soft
       calc(var(--delay) + var(--petal-start) + 1.65s) infinite;
-  will-change: transform, opacity;
 
   // Serbuk sari: dibuat dengan box-shadow agar tidak menambah DOM.
   &::before {

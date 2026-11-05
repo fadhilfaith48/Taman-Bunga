@@ -166,6 +166,15 @@ body.page--garden {
   will-change: transform;
 }
 
+// Browser lama tanpa properti transform individu (`translate`/`scale`):
+// kedalaman lapisan dan overscan tidak berlaku, jadi animasi kamera
+// dimatikan — panggung tetap tampak seperti versi 2D yang rapi.
+@supports not ((translate: 0 0 1px) and (scale: 2)) {
+  .garden__camera {
+    animation: none;
+  }
+}
+
 // Kedalaman per lapisan — satu @each untuk seluruh panggung.
 @each $name, $z in v.$scene-layers {
   .garden__#{$name} {
@@ -288,7 +297,6 @@ body.page--garden {
     background-repeat: no-repeat;
     opacity: 0.8;
     animation: stars-breathe 9s v.$ease-soft infinite alternate;
-    will-change: opacity;
   }
 }
 
@@ -607,7 +615,6 @@ $foliage-front-b: ();
   filter: blur(0.4px);
   animation: spore-drift var(--spore-dur, 26s) linear var(--spore-delay, 0s)
     infinite;
-  will-change: transform;
 
   @for $i from 1 through 4 {
     &:nth-child(#{$i}) {
@@ -683,7 +690,6 @@ $pollen-b: ();
       transparent 72%
     );
     animation: pollen-drift 34s linear -9s infinite alternate;
-    will-change: transform, opacity;
   }
 
   &::before {
@@ -815,7 +821,6 @@ $pollen-b: ();
   );
   box-shadow: 0 0 0.9vmin hsla(var(--hue), 95%, 68%, 0.28);
   animation: petal-fall var(--duration) linear var(--delay) infinite;
-  will-change: transform, opacity;
 }
 
 .falling-petal--a {
@@ -1063,6 +1068,32 @@ $pollen-b: ();
 
   .garden__foliage--front {
     opacity: 0.5;
+  }
+}
+
+// Layar kecil & perangkat sentuh: ringankan partikel dan blur agar
+// FPS tetap stabil. Komposisi utama (bunga + makhluk) tidak berubah —
+// hanya spora/kelopak/kunang-kunang berkurang dan kabut lebih tipis.
+@media (max-width: 480px), (pointer: coarse) {
+  .spore:nth-child(3),
+  .spore:nth-child(4),
+  .falling-petal--b,
+  // Anak ke-9 = firefly terakhir (4 spore mendahului 5 firefly).
+  .firefly:nth-child(9) {
+    display: none;
+  }
+
+  .garden::before {
+    filter: blur(1vmin);
+  }
+
+  .garden__sky::before {
+    filter: blur(1.8vmin);
+  }
+
+  .garden__foliage--back::before,
+  .garden__foliage--back::after {
+    filter: blur(0.8vmin);
   }
 }
 

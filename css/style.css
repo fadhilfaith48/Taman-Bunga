@@ -281,7 +281,6 @@
   opacity: var(--depth-opacity, 1);
   filter: blur(var(--depth-blur, 0)) saturate(var(--depth-saturation, 1));
   animation: flower-sway var(--sway-duration) ease-in-out var(--delay) infinite alternate both;
-  will-change: transform;
   pointer-events: none;
 }
 .flower::before, .flower::after {
@@ -343,7 +342,6 @@
   perspective: 26rem;
   transform-style: preserve-3d;
   animation: bloom-breathe var(--breathe-duration) ease-in-out calc(var(--delay) + var(--petal-start) + 1.6s) infinite alternate;
-  will-change: transform;
 }
 
 .flower__petal {
@@ -442,7 +440,6 @@
   background: radial-gradient(circle, hsla(var(--hue), 100%, 98%, 1) 0 22%, hsla(var(--hue), 100%, 82%, 0.82) 34%, transparent 72%);
   box-shadow: 1.7vmin -1.3vmin 0 -0.12vmin hsla(calc(var(--hue) + 18), 100%, 84%, 0.88), -1.5vmin -0.9vmin 0 -0.14vmin hsla(calc(var(--hue) - 12), 100%, 80%, 0.8), 0.3vmin 1.9vmin 0 -0.1vmin hsla(calc(var(--hue) + 10), 100%, 90%, 0.86), -2vmin 1.2vmin 0 -0.16vmin hsla(var(--hue), 100%, 76%, 0.72), 2.4vmin 0.5vmin 0 -0.18vmin hsla(calc(var(--hue) + 26), 100%, 82%, 0.74), -0.6vmin -2.5vmin 0 -0.15vmin hsla(calc(var(--hue) - 22), 100%, 78%, 0.7);
   animation: pollen-orbit 8.6s ease-in-out calc(var(--delay) + var(--petal-start) + 1.35s) infinite;
-  will-change: transform, opacity;
 }
 
 .flower__core {
@@ -457,7 +454,6 @@
   background: radial-gradient(circle at 36% 32%, hsla(var(--hue), 100%, 98%, 1) 0 8%, hsla(calc(var(--hue) + 12), 100%, 82%, 0.98) 22%, hsla(var(--hue), 92%, 58%, 0.92) 48%, hsla(calc(var(--hue) - 12), 82%, 35%, 0.55) 72%, transparent 78%);
   box-shadow: 0 0 1.2vmin hsla(var(--hue), 100%, 78%, 0.8), 0 0 3.6vmin hsla(var(--hue), 95%, 59%, 0.46), 0 0 7vmin hsla(var(--hue), 90%, 52%, 0.2);
   animation: core-ignite 0.9s cubic-bezier(0.18, 0.89, 0.32, 1.08) calc(var(--delay) + var(--petal-start) + 0.7s) both, core-pulse 4.5s ease-in-out calc(var(--delay) + var(--petal-start) + 1.65s) infinite;
-  will-change: transform, opacity;
 }
 .flower__core::before {
   content: "";
@@ -1531,6 +1527,11 @@ body.page--garden {
   will-change: transform;
 }
 
+@supports not ((translate: 0 0 1px) and (scale: 2)) {
+  .garden__camera {
+    animation: none;
+  }
+}
 .garden__sky {
   --layer-z: -95px;
   --layer-scale: 1.0678571429;
@@ -1611,7 +1612,6 @@ body.page--garden {
   background-repeat: no-repeat;
   opacity: 0.8;
   animation: stars-breathe 9s ease-in-out infinite alternate;
-  will-change: opacity;
 }
 
 .garden__foliage {
@@ -1748,7 +1748,6 @@ body.page--garden {
   background: radial-gradient(circle, hsla(140, 90%, 88%, 0.9) 0 34%, hsla(136, 80%, 70%, 0.34) 58%, transparent 76%);
   filter: blur(0.4px);
   animation: spore-drift var(--spore-dur, 26s) linear var(--spore-delay, 0s) infinite;
-  will-change: transform;
 }
 .spore:nth-child(1) {
   left: 33%;
@@ -1796,7 +1795,6 @@ body.page--garden {
   opacity: 0.4;
   background: radial-gradient(circle, hsla(142, 100%, 92%, 0.95) 0 24%, transparent 72%);
   animation: pollen-drift 34s linear -9s infinite alternate;
-  will-change: transform, opacity;
 }
 .garden__ambient::before {
   z-index: 0;
@@ -1952,7 +1950,6 @@ body.page--garden {
   background: linear-gradient(158deg, hsla(var(--hue), 100%, 88%, 0.92), hsla(calc(var(--hue) - 14), 82%, 56%, 0.34));
   box-shadow: 0 0 0.9vmin hsla(var(--hue), 95%, 68%, 0.28);
   animation: petal-fall var(--duration) linear var(--delay) infinite;
-  will-change: transform, opacity;
 }
 
 .falling-petal--a {
@@ -2158,6 +2155,24 @@ body.page--garden {
   }
   .garden__foliage--front {
     opacity: 0.5;
+  }
+}
+@media (max-width: 480px), (pointer: coarse) {
+  .spore:nth-child(3),
+  .spore:nth-child(4),
+  .falling-petal--b,
+  .firefly:nth-child(9) {
+    display: none;
+  }
+  .garden::before {
+    filter: blur(1vmin);
+  }
+  .garden__sky::before {
+    filter: blur(1.8vmin);
+  }
+  .garden__foliage--back::before,
+  .garden__foliage--back::after {
+    filter: blur(0.8vmin);
   }
 }
 @media (prefers-reduced-motion: reduce) {
