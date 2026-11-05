@@ -1,6 +1,6 @@
 # Taman Bunga
 
-[![Build & cek CSS](https://github.com/fadhilfaith48/Taman-Bunga/actions/workflows/ci.yml/badge.svg)](https://github.com/fadhilfaith48/Taman-Bunga/actions/workflows/ci.yml)
+[![Build, cek CSS & QA](https://github.com/fadhilfaith48/Taman-Bunga/actions/workflows/ci.yml/badge.svg)](https://github.com/fadhilfaith48/Taman-Bunga/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 Taman bunga malam interaktif yang dibuat dengan HTML, CSS (SCSS), dan sedikit
@@ -10,6 +10,12 @@ kamera yang mengikuti pointer — semuanya tanpa gambar, SVG eksternal, atau
 library pihak ketiga.
 
 **Live:** <https://fadhilfaith48.github.io/Taman-Bunga/>
+
+## Pratinjau
+
+| Desktop 1440×900 | Ponsel 390×844 |
+| --- | --- |
+| ![Taman bunga malam di desktop](assets/screenshots/desktop.jpg) | ![Taman bunga malam di ponsel](assets/screenshots/mobile.jpg) |
 
 ## Fitur
 
@@ -34,7 +40,9 @@ Taman Bunga Prroyek/
 ├── index.html              # Halaman utama (dilayani GitHub Pages)
 ├── flower.html             # Pengalih ke index.html (link lama tetap hidup)
 ├── assets/
-│   └── og-cover.png        # Gambar pratinjau tautan (og:image)
+│   ├── og-cover.jpg         # Gambar pratinjau tautan (og:image)
+│   ├── apple-touch-icon.png # Ikon Add to Home Screen iOS
+│   └── screenshots/         # Cuplikan untuk README
 ├── css/
 │   └── style.css            # Hasil kompilasi SCSS (dipakai index.html)
 ├── js/
@@ -50,9 +58,10 @@ Taman Bunga Prroyek/
 │   ├── helpers.js           # Deteksi browser + URL tes
 │   ├── qa.js                # QA 6 viewport, reduced-motion, FPS
 │   └── parallax.js          # Uji kedalaman parallax per lapisan
-├── .github/workflows/ci.yml # CI: build & cek sinkron CSS
+├── .github/workflows/ci.yml # CI: cek sinkron CSS + QA visual
+├── CHANGELOG.md             # Riwayat rilis
 ├── LICENSE                  # MIT
-└── package.json             # Script build/check + versi sass terkunci
+└── package.json             # Script build/check/test + versi sass terkunci
 ```
 
 ## Cara Menjalankan
@@ -80,7 +89,8 @@ npm run check   # pastikan css/style.css sinkron dengan scss/
 Tanpa npm pun masih bisa: `npx sass scss/style.scss css/style.css --no-source-map`.
 
 > Setiap perubahan SCSS wajib diikuti `npm run build` lalu commit bersama
-> perubahannya. GitHub Actions menjalankan `npm run check` di setiap push.
+> perubahannya. GitHub Actions menjalankan `npm run check` dan `npm test`
+> di setiap push.
 
 ## Tes
 
