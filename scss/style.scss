@@ -701,8 +701,10 @@ $pollen-b: ();
 }
 
 // Kunang-kunang: tubuh glowing + sayap mengepak + halo berdenyut.
+// Offset nth-child: 4 spore mendahului firefly di .garden__ambient,
+// jadi firefly ke-$i adalah anak ke-($i + 4).
 @for $i from 1 through v.$firefly-count {
-  .firefly:nth-child(#{$i}) {
+  .firefly:nth-child(#{$i + 4}) {
     --x: #{list.nth(v.$firefly-x, $i)};
     --y: #{list.nth(v.$firefly-y, $i)};
     --hue: #{list.nth(v.$firefly-hue, $i)};

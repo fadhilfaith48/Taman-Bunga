@@ -1810,7 +1810,7 @@ body.page--garden {
   animation-delay: -24s;
 }
 
-.firefly:nth-child(1) {
+.firefly:nth-child(5) {
   --x: 12%;
   --y: 22%;
   --hue: 46;
@@ -1826,7 +1826,7 @@ body.page--garden {
   --fly-y3: 5vmin;
 }
 
-.firefly:nth-child(2) {
+.firefly:nth-child(6) {
   --x: 28%;
   --y: 38%;
   --hue: 56;
@@ -1842,7 +1842,7 @@ body.page--garden {
   --fly-y3: -12vmin;
 }
 
-.firefly:nth-child(3) {
+.firefly:nth-child(7) {
   --x: 46%;
   --y: 55%;
   --hue: 150;
@@ -1858,7 +1858,7 @@ body.page--garden {
   --fly-y3: 4vmin;
 }
 
-.firefly:nth-child(4) {
+.firefly:nth-child(8) {
   --x: 68%;
   --y: 30%;
   --hue: 32;
@@ -1874,7 +1874,7 @@ body.page--garden {
   --fly-y3: 9vmin;
 }
 
-.firefly:nth-child(5) {
+.firefly:nth-child(9) {
   --x: 86%;
   --y: 47%;
   --hue: 96;
