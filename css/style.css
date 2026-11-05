@@ -2157,6 +2157,17 @@ body.page--garden {
     opacity: 0.5;
   }
 }
+@media (prefers-contrast: more) {
+  .garden::before {
+    background: radial-gradient(ellipse at 50% 43%, transparent 46%, rgba(1, 10, 5, 0.2) 80%, rgba(0, 7, 3, 0.46) 100%);
+  }
+  .garden::after {
+    background: linear-gradient(180deg, transparent 0%, rgba(4, 28, 15, 0.34) 58%, rgba(1, 12, 7, 0.7) 100%);
+  }
+  .garden__foliage--front {
+    opacity: 0.42;
+  }
+}
 @media (max-width: 480px), (pointer: coarse) {
   .spore:nth-child(3),
   .spore:nth-child(4),

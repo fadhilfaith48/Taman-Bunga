@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fadhilfaith48.github.io/Taman-Bunga/sitemap.xml
