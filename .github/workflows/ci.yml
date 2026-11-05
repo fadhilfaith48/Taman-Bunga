@@ -1,4 +1,4 @@
-name: Build & cek CSS
+name: Build, cek CSS & QA
 
 on:
   push:
@@ -22,3 +22,21 @@ jobs:
       # Pastikan css/style.css tidak ketinggalan setelah SCSS berubah.
       - name: Cek css/style.css sinkron dengan scss/
         run: npm run check
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependency
+        run: npm ci
+
+      # Chrome sudah tersedia di runner; QA 6 viewport + reduced-motion
+      # + FPS (informatif) + uji parallax.
+      - name: Jalankan QA visual & parallax
+        run: npm test
