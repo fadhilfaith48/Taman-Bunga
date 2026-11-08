@@ -40,6 +40,11 @@ Taman Bunga Prroyek/
 ├── index.html              # Halaman utama (dilayani GitHub Pages)
 ├── flower.html             # Pengalih ke index.html (link lama tetap hidup)
 ├── favicon.ico             # Ikon tab: bunga 16/32/48 (PNG di dalam ICO)
+├── site.webmanifest        # PWA: nama, tema, ikon 192/512 (any + maskable)
+├── icon-192.png            # Ikon PWA 192x192
+├── icon-512.png            # Ikon PWA 512x512
+├── maskable-192.png        # Ikon maskable (zona aman) 192x192
+├── maskable-512.png        # Ikon maskable (zona aman) 512x512
 ├── assets/
 │   ├── og-cover.jpg         # Gambar pratinjau tautan (og:image)
 │   ├── apple-touch-icon.png # Ikon Add to Home Screen iOS

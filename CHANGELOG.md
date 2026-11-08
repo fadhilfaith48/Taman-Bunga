@@ -3,6 +3,13 @@
 Semua perubahan penting pada proyek ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/).
 
+## [Unreleased]
+
+### Ditambahkan
+
+- `site.webmanifest` + ikon PWA 192/512 (regular & maskable) untuk
+  Add to Home Screen di Android/Chromium.
+
 ## [1.0.0] - 2026-11-05
 
 Rilis pertama: taman bunga malam interaktif yang seluruh visualnya dibuat
