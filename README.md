@@ -39,6 +39,7 @@ library pihak ketiga.
 Taman Bunga Prroyek/
 ├── index.html              # Halaman utama (dilayani GitHub Pages)
 ├── flower.html             # Pengalih ke index.html (link lama tetap hidup)
+├── favicon.ico             # Ikon tab: bunga 16/32/48 (PNG di dalam ICO)
 ├── assets/
 │   ├── og-cover.jpg         # Gambar pratinjau tautan (og:image)
 │   ├── apple-touch-icon.png # Ikon Add to Home Screen iOS
