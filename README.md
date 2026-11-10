@@ -64,7 +64,10 @@ Taman Bunga Prroyek/
 │   ├── helpers.js           # Deteksi browser + URL tes
 │   ├── qa.js                # QA 6 viewport, reduced-motion, FPS
 │   └── parallax.js          # Uji kedalaman parallax per lapisan
-├── .github/workflows/ci.yml # CI: cek sinkron CSS + QA visual
+├── .github/
+│   ├── workflows/ci.yml    # CI: cek sinkron CSS + validasi HTML + QA visual
+│   └── dependabot.yml      # Pembaruan dependency & Actions mingguan
+├── .htmlvalidate.json      # Aturan gaya validasi HTML
 ├── CHANGELOG.md             # Riwayat rilis
 ├── LICENSE                  # MIT
 └── package.json             # Script build/check/test + versi sass terkunci
@@ -90,13 +93,14 @@ npm install     # sekali saja, mengunci versi sass
 npm run build   # kompilasi scss/style.scss -> css/style.css
 npm run watch   # kompilasi ulang otomatis saat file SCSS disimpan
 npm run check   # pastikan css/style.css sinkron dengan scss/
+npm run lint:html  # validasi struktur index.html & flower.html
 ```
 
 Tanpa npm pun masih bisa: `npx sass scss/style.scss css/style.css --no-source-map`.
 
 > Setiap perubahan SCSS wajib diikuti `npm run build` lalu commit bersama
-> perubahannya. GitHub Actions menjalankan `npm run check` dan `npm test`
-> di setiap push.
+> perubahannya. GitHub Actions menjalankan `npm run check`, `npm run lint:html`,
+> dan `npm test` di setiap push.
 
 ## Tes
 

@@ -23,6 +23,23 @@ jobs:
       - name: Cek css/style.css sinkron dengan scss/
         run: npm run check
 
+  lint-html:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependency
+        run: npm ci
+
+      # Struktur HTML valid (aturan gaya di .htmlvalidate.json).
+      - name: Validasi HTML
+        run: npm run lint:html
+
   test:
     runs-on: ubuntu-latest
     steps:

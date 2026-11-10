@@ -13,9 +13,14 @@
     "build": "sass scss/style.scss css/style.css --no-source-map",
     "watch": "sass --watch scss/style.scss css/style.css --no-source-map",
     "check": "node scripts/check-css.js",
+    "lint:html": "html-validate index.html flower.html",
     "test": "node tests/qa.js && node tests/parallax.js"
   },
+  "engines": {
+    "node": ">=20"
+  },
   "devDependencies": {
+    "html-validate": "^11.21.0",
     "playwright-core": "^1.64.1",
     "sass": "^1.107.1"
   }
