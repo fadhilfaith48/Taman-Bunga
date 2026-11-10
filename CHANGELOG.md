@@ -5,10 +5,21 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/).
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-11-10
+
 ### Ditambahkan
 
+- `favicon.ico` (16/32/48 PNG di dalam ICO) untuk browser/bot yang masih
+  meminta `/favicon.ico`; SVG data URI tetap dipakai untuk layar retina.
+- Dimensi & alt gambar sosial: `og:image:width/height/type/alt` dan
+  `twitter:image:alt` (juga di halaman pengalih `flower.html`).
 - `site.webmanifest` + ikon PWA 192/512 (regular & maskable) untuk
-  Add to Home Screen di Android/Chromium.
+  Add to Home Screen di Android/Chromium, plus `apple-mobile-web-app-title`.
+
+### Diubah
+
+- Struktur README memuat `favicon.ico` dan berkas PWA.
+- `sitemap.xml` diperbarui `lastmod`-nya.
 
 ## [1.0.0] - 2026-11-05
 
@@ -52,4 +63,6 @@ dari HTML + SCSS/CSS (tanpa gambar, SVG eksternal, atau library).
 - Seluruh animasi berhenti pada `prefers-reduced-motion`.
 - Tanpa JavaScript pun halaman tampil penuh (JS hanya menambah parallax).
 
+[Unreleased]: https://github.com/fadhilfaith48/Taman-Bunga/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/fadhilfaith48/Taman-Bunga/releases/tag/v1.1.0
 [1.0.0]: https://github.com/fadhilfaith48/Taman-Bunga/releases/tag/v1.0.0
