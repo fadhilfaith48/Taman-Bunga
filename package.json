@@ -13,11 +13,11 @@
     "build": "sass scss/style.scss css/style.css --no-source-map",
     "watch": "sass --watch scss/style.scss css/style.css --no-source-map",
     "check": "node scripts/check-css.js",
-    "lint:html": "html-validate index.html flower.html",
+    "lint:html": "html-validate index.html flower.html 404.html",
     "test": "node tests/qa.js && node tests/parallax.js"
   },
   "engines": {
-    "node": ">=20"
+    "node": "^22.22.0 || >=24.8.0"
   },
   "devDependencies": {
     "html-validate": "^11.21.0",
