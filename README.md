@@ -87,7 +87,8 @@ Versi live bisa diakses di <https://fadhilfaith48.github.io/Taman-Bunga/>
 
 ## Build SCSS
 
-`css/style.css` adalah hasil kompilasi folder `scss/`. Instalasi awal + build:
+`css/style.css` adalah hasil kompilasi folder `scss/`. Instalasi awal + build
+(perlu Node `^22.22` atau `>=24.8` — lihat `engines` di `package.json`):
 
 ```bash
 npm install     # sekali saja, mengunci versi sass
