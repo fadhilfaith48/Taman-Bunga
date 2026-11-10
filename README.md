@@ -65,9 +65,7 @@ Taman Bunga Prroyek/
 │   ├── helpers.js           # Deteksi browser + URL tes
 │   ├── qa.js                # QA 6 viewport, reduced-motion, FPS
 │   └── parallax.js          # Uji kedalaman parallax per lapisan
-├── .github/
-│   ├── workflows/ci.yml    # CI: cek sinkron CSS + validasi HTML + QA visual
-│   └── dependabot.yml      # Pembaruan dependency & Actions mingguan
+├── .github/workflows/ci.yml # CI: cek sinkron CSS + validasi HTML + QA visual
 ├── .htmlvalidate.json      # Aturan gaya validasi HTML
 ├── CHANGELOG.md             # Riwayat rilis
 ├── LICENSE                  # MIT
