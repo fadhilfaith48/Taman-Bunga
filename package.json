@@ -13,7 +13,7 @@
     "build": "sass scss/style.scss css/style.css --no-source-map",
     "watch": "sass --watch scss/style.scss css/style.css --no-source-map",
     "check": "node scripts/check-css.js",
-    "lint:html": "html-validate index.html flower.html",
+    "lint:html": "html-validate index.html flower.html 404.html",
     "test": "node tests/qa.js && node tests/parallax.js"
   },
   "engines": {

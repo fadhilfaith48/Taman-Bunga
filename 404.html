@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#010507" />
+    <!-- Halaman galat tidak boleh masuk hasil pencarian. -->
+    <meta name="robots" content="noindex" />
+    <title>404 — Taman Bunga Malam</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g fill='%232ee6c8'><ellipse cx='32' cy='13' rx='8' ry='13' transform='rotate(0 32 32)'/><ellipse cx='32' cy='13' rx='8' ry='13' transform='rotate(72 32 32)'/><ellipse cx='32' cy='13' rx='8' ry='13' transform='rotate(144 32 32)'/><ellipse cx='32' cy='13' rx='8' ry='13' transform='rotate(216 32 32)'/><ellipse cx='32' cy='13' rx='8' ry='13' transform='rotate(288 32 32)'/></g><circle cx='32' cy='32' r='9' fill='%23ffd166'/></svg>"
+    />
+    <!-- CSS inline supaya halaman ini tampil penuh walau dimuat dari
+         URL mana pun (relatif ke root tidak bisa diandalkan di sini). -->
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
+        padding: clamp(1rem, 4vmin, 2.5rem);
+        text-align: center;
+        color: #eafffb;
+        background:
+          radial-gradient(
+            ellipse 60% 40% at 24% 18%,
+            hsla(150, 92%, 58%, 0.16),
+            transparent 72%
+          ),
+          radial-gradient(
+            ellipse 50% 36% at 78% 76%,
+            hsla(148, 92%, 56%, 0.12),
+            transparent 74%
+          ),
+          #010507;
+        font-family:
+          system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      }
+
+      main {
+        max-width: 34rem;
+      }
+
+      /* Bunga lima kelopak — murni CSS, sama seperti favicon. */
+      .blossom {
+        position: relative;
+        width: clamp(4.5rem, 18vmin, 7.5rem);
+        aspect-ratio: 1;
+        margin-inline: auto;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 50% 40%,
+          hsla(150, 70%, 20%, 0.55),
+          transparent 72%
+        );
+        animation: breathe 5s ease-in-out infinite alternate;
+      }
+
+      /* Tiap kelopak telur dijauhkan dari pusat lalu diputar 72°. */
+      .blossom .petal {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 22%;
+        height: 36%;
+        margin: -18% 0 0 -11%;
+        border-radius: 50%;
+        background: #2ee6c8;
+        box-shadow: 0 0 1.6vmin rgba(46, 230, 200, 0.55);
+        transform: rotate(var(--r)) translateY(-72%);
+      }
+
+      .blossom .petal:nth-child(1) {
+        --r: 0deg;
+      }
+      .blossom .petal:nth-child(2) {
+        --r: 72deg;
+      }
+      .blossom .petal:nth-child(3) {
+        --r: 144deg;
+      }
+      .blossom .petal:nth-child(4) {
+        --r: 216deg;
+      }
+      .blossom .petal:nth-child(5) {
+        --r: 288deg;
+      }
+
+      .blossom i {
+        position: absolute;
+        inset: 34%;
+        border-radius: 50%;
+        background: #ffd166;
+        box-shadow: 0 0 1.6vmin rgba(255, 209, 102, 0.7);
+      }
+
+      h1 {
+        margin: clamp(1rem, 4vmin, 1.8rem) 0 0.4rem;
+        font-size: clamp(1.6rem, 6vmin, 2.4rem);
+        letter-spacing: 0.02em;
+      }
+
+      p {
+        margin: 0 auto clamp(1.2rem, 5vmin, 2rem);
+        max-width: 28rem;
+        color: rgba(234, 255, 251, 0.72);
+        font-size: clamp(0.95rem, 2.6vmin, 1.05rem);
+        line-height: 1.6;
+      }
+
+      .code {
+        display: block;
+        margin-top: 0.2rem;
+        color: #2ee6c8;
+        font-size: 0.78em;
+        letter-spacing: 0.14em;
+      }
+
+      a.back {
+        display: inline-block;
+        padding: 0.7em 1.6em;
+        border: 1px solid rgba(46, 230, 200, 0.5);
+        border-radius: 999px;
+        color: #04140d;
+        background: linear-gradient(160deg, #46f0d4, #2ee6c8);
+        text-decoration: none;
+        font-weight: 600;
+        box-shadow: 0 0 2.4vmin rgba(46, 230, 200, 0.35);
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+
+      a.back:hover,
+      a.back:focus-visible {
+        transform: translateY(-2px);
+        box-shadow: 0 0 3.4vmin rgba(46, 230, 200, 0.55);
+      }
+
+      a.back:focus-visible {
+        outline: 2px solid #ffd166;
+        outline-offset: 3px;
+      }
+
+      @keyframes breathe {
+        from {
+          transform: scale(1);
+          filter: brightness(1);
+        }
+        to {
+          transform: scale(1.06);
+          filter: brightness(1.25);
+        }
+      }
+
+      /* Tanpa scroll horizontal di layar sempit. */
+      html {
+        overflow-x: hidden;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .blossom {
+          animation: none;
+        }
+
+        a.back {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="blossom" aria-hidden="true">
+        <span class="petal"></span>
+        <span class="petal"></span>
+        <span class="petal"></span>
+        <span class="petal"></span>
+        <span class="petal"></span>
+        <i></i>
+      </div>
+      <h1>Halaman tidak ditemukan<span class="code">404</span></h1>
+      <p>
+        Bunga yang Anda cari tumbuh di jalur lain — mungkin alamatnya salah
+        ketik atau sudah dipindah. Kembali ke taman untuk memulai lagi.
+      </p>
+      <!-- Relatif ke root: benar untuk URL sesingkat /nama-halaman. -->
+      <a class="back" href="index.html">← Kembali ke taman</a>
+    </main>
+  </body>
+</html>

@@ -39,6 +39,7 @@ library pihak ketiga.
 Taman Bunga Prroyek/
 ├── index.html              # Halaman utama (dilayani GitHub Pages)
 ├── flower.html             # Pengalih ke index.html (link lama tetap hidup)
+├── 404.html                # Halaman "tidak ditemukan" bertema taman
 ├── favicon.ico             # Ikon tab: bunga 16/32/48 (PNG di dalam ICO)
 ├── site.webmanifest        # PWA: nama, tema, ikon 192/512 (any + maskable)
 ├── icon-192.png            # Ikon PWA 192x192
